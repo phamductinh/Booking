@@ -1,0 +1,126 @@
+.tele-container {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.tele-input {
+	display: flex;
+}
+
+.tele-name {
+	width: 40%;
+	padding: 20px;
+}
+
+.tele-name label {
+	font-size: 18px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.tele-name input {
+	width: 100%;
+	outline: none;
+	border: 1px solid rgba(8, 8, 8, 0.288);
+	padding: 10px;
+	border-radius: 10px;
+	height: 47px;
+}
+
+.tele-image {
+	width: 40%;
+	padding: 20px;
+	margin-left: 20px;
+}
+
+.tele-image label {
+	font-size: 18px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.btn-add-new-tele {
+	width: 150px;
+	height: 47px;
+	margin-top: 55px;
+	margin-left: 60px;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+	background-color: #084cdf;
+	color: #fff;
+}
+
+.btn-edit-tele{
+    width: 150px;
+	height: 47px;
+	margin-top: 55px;
+	margin-left: 60px;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+	background-color: rgb(255, 187, 0);
+	color: #fff;
+}
+
+.btn-add-new-tele:hover {
+	background: #0d45a5;
+}
+
+#file-input {
+	width: 100%;
+	max-width: 100%;
+	color: #444;
+	padding: 2px;
+	background: #fff;
+	border-radius: 10px;
+	border: 1px solid rgba(8, 8, 8, 0.288);
+}
+
+#file-input::file-selector-button {
+	margin-right: 20px;
+	border: none;
+	background: #084cdf;
+	padding: 10px 20px;
+	border-radius: 10px;
+	color: #fff;
+	cursor: pointer;
+	transition: background 0.2s ease-in-out;
+}
+
+#file-input::file-selector-button:hover {
+	background: #0d45a5;
+}
+
+.description {
+	padding: 20px;
+}
+
+.description label {
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+.tele-image-table {
+	width: 250px;
+	height: 130px;
+	margin: 0 auto;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.tele-col {
+	max-height: 150px;
+	overflow: scroll;
+}
+
+.description-table {
+	max-height: 150px;
+	font-size: 13px;
+	overflow: scroll;
+}
+
+#customers {
+	margin: 20px 0;
+}
