@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getALLTelemedicine } from "../../services/telemedicineService";
-import { getALLSpecialty } from "../../services/specialtyService";
+import * as actions from "../../store/actions/";
 import "./HomePage.css";
-<link
-	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous"
-	referrerpolicy="no-referrer"
-/>;
+import { Link } from "react-router-dom";
 
 class HomePage extends Component {
 	constructor(props) {
@@ -17,12 +11,12 @@ class HomePage extends Component {
 		this.state = {
 			arrTelems: [],
 			arrSpecialty: [],
+			isOpenMenu: true,
 		};
 	}
 
-	async componentDidMount() {
-		await this.getALLTelemedicineReact();
-		await this.getALLSpecialtyReact();
+	componentDidMount() {
+		this.getALLTelemedicineReact();
 	}
 
 	getALLTelemedicineReact = async () => {
@@ -34,15 +28,11 @@ class HomePage extends Component {
 		}
 	};
 
-	getALLSpecialtyReact = async () => {
-		let res = await getALLSpecialty();
-		console.log("check res", res);
-		if (res && res.code === 200) {
-			this.setState({
-				arrSpecialty: res.data,
-			});
-		}
-	};
+	handleOpenMenu() {
+		this.setState((prevState) => ({
+			isOpenMenu: !prevState.isOpenMenu,
+		}));
+	}
 
 	handleNext() {
 		let lists = document.querySelectorAll(".telem-slide-item");
@@ -53,18 +43,10 @@ class HomePage extends Component {
 		document.getElementById("telem-slide").prepend(lists[lists.length - 1]);
 	}
 
-	handleNextSpecialty() {
-		let lists = document.querySelectorAll(".spec-slide-item");
-		document.getElementById("spec-slide").appendChild(lists[0]);
-	}
-	handlePrevSpecialty() {
-		let lists = document.querySelectorAll(".spec-slide-item");
-		document.getElementById("spec-slide").prepend(lists[lists.length - 1]);
-	}
-
 	render() {
-		let { arrTelems, arrSpecialty } = this.state;
-		console.log(arrTelems);
+		let { arrTelems, isOpenMenu } = this.state;
+		const { processLogout, userInfor, isLoggedIn } = this.props;
+
 		return (
 			<div className="homepage-container">
 				<div id="header" className="header-homepage">
@@ -79,9 +61,6 @@ class HomePage extends Component {
 							<div className="child-content">
 								<p>Bác sĩ</p>
 							</div>
-							<div className="child-content">
-								<p>Gói khám</p>
-							</div>
 						</div>
 						<div className="right-content">
 							<div className="support">
@@ -92,12 +71,78 @@ class HomePage extends Component {
 								<div className="flag-vn"></div>
 								<div className="flag-en"></div>
 							</div>
-							<i className="fas fa-bars"></i>
-							<div className="toggle-menu">
-                                <div className="user-name">
-                                    
-                                </div>
-                            </div>
+							{!isLoggedIn ? (
+								<button class="btn-login-header">
+									<Link to="/login">Login</Link>
+									<div class="arrow-wrapper">
+										<div class="arrow"></div>
+									</div>
+								</button>
+							) : (
+								<div
+									className="user-avatar-header"
+									style={{
+										backgroundImage: `url(${
+											userInfor.image !== null
+												? Buffer.from(
+														userInfor.image,
+														"base64"
+												  ).toString("binary")
+												: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+										})`,
+									}}
+									onClick={() => this.handleOpenMenu()}
+								></div>
+							)}
+
+							{isOpenMenu && (
+								<>
+									{isLoggedIn ? (
+										<div className="toggle-menu">
+											<div className="user-infor">
+												<div
+													className="user-avatar"
+													style={{
+														backgroundImage: `url(${
+															userInfor.image !==
+															null
+																? Buffer.from(
+																		userInfor.image,
+																		"base64"
+																  ).toString(
+																		"binary"
+																  )
+																: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+														})`,
+													}}
+												></div>
+												<div className="user-name">
+													{userInfor.fullName
+														? userInfor.fullName
+														: "Unknown name"}
+												</div>
+											</div>
+											<div className="update-infor">
+												<Link to="/update-infor">
+													Chỉnh sửa thông tin
+												</Link>
+											</div>
+											<div className="his-booking">
+												<Link to="/history-booking">
+													Lịch sử đặt lịch
+												</Link>
+											</div>
+											<button
+												className="btn-logout"
+												onClick={processLogout}
+											>
+												<i className="fa-solid fa-right-from-bracket"></i>
+												Đăng xuất
+											</button>
+										</div>
+									) : null}
+								</>
+							)}
 						</div>
 					</div>
 				</div>
@@ -113,11 +158,11 @@ class HomePage extends Component {
 									<h1>CHĂM SÓC SỨC KHỎE TOÀN DIỆN</h1>
 								</div>
 								<div className="search">
-									<i className="fas fa-search"></i>
 									<input
 										type="search"
-										placeholder="Tìm chuyên khoa"
+										placeholder="Tìm bác sĩ"
 									/>
+									<i className="fas fa-search"></i>
 								</div>
 								<div className="download">
 									<div className="android"></div>
@@ -126,6 +171,25 @@ class HomePage extends Component {
 							</div>
 						</div>
 						<div className="content-down"></div>
+					</div>
+				</div>
+
+				<div className="search-container">
+					<div className="search-box">
+						<input
+							type="text"
+							autoComplete="off"
+							placeholder="Nhập tên bác sĩ"
+						/>
+						<select name="specialty" id="specialty-select">
+							<option value="" disabled selected>
+								Chọn chuyên khoa
+							</option>
+							<option value="Nam">Nam</option>
+							<option value="Nữ">Nữ</option>
+							<option value="Khác">Khác</option>
+						</select>
+						<button className="btn-search-doctor">Search</button>
 					</div>
 				</div>
 
@@ -181,177 +245,6 @@ class HomePage extends Component {
 					</div>
 				</div>
 
-				<div className="specialty-container">
-					<div className="spec-content-up">
-						<div className="spec-title">Chuyên khoa phổ biến</div>
-						<button className="spec-btn">Xem thêm</button>
-					</div>
-					<div className="spec-slide-container">
-						<div id="spec-slide">
-							{arrSpecialty &&
-								arrSpecialty.length > 0 &&
-								arrSpecialty.map((item, index) => {
-									let specialtyImage = new Buffer(
-										item.image,
-										"base64"
-									).toString("binary");
-									return (
-										<div
-											className="spec-slide-item"
-											key={index}
-										>
-											<div
-												className="spec-slide-img"
-												style={{
-													backgroundImage: `url(${specialtyImage})`,
-												}}
-											></div>
-											<div className="spec-content">
-												{item.name}
-											</div>
-										</div>
-									);
-								})}
-						</div>
-					</div>
-					<div className="telem-buttons">
-						<button
-							className="telem-prev"
-							id="telem-prev"
-							onClick={() => this.handleNextSpecialty()}
-						></button>
-						<button
-							className="telem-next"
-							id="telem-next"
-							onClick={() => this.handleNextSpecialty()}
-						></button>
-					</div>
-				</div>
-
-				<div className="facility-container">
-					<div className="faci-content-up">
-						<div className="faci-title">Cơ sở y tế nổi bật</div>
-						<button className="faci-btn">Xem thêm</button>
-					</div>
-					<div className="faci-slide-container">
-						<div id="faci-slide">
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/bv-viet-duc.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Bệnh viện Hữu nghị Việt Đức
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/benh-vien-cho-ray-h1.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Bệnh viện Chợ Rẫy
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/pk-dhyd1.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Phòng khám Bệnh viện Đại học Y Dược 1
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/bvk.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Bệnh viện K - Cơ sở Phan Chu Trinh
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/bv-hung-viet.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Bệnh viện Ung bướu Hưng Việt
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/medlatecthanhxuan.jpg)",
-									}}
-								></div>
-								<div className="faci-content">
-									Hệ thống y tế MEDLATEC
-								</div>
-							</div>
-							<div
-								className="faci-slide-item"
-								onclick="window.open('/facility/facility.html')"
-							>
-								<div
-									className="faci-slide-img"
-									style={{
-										backgroundImage:
-											"url(./image/facilities/diag.png)",
-									}}
-								></div>
-								<div className="faci-content">
-									Trung tâm xét nghiệm Diag Laboratories
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="faci-buttons">
-						<button className="faci-prev" id="faci-prev">
-							<i className="fas fa-long-arrow-left"></i>
-						</button>
-						<button className="faci-next" id="faci-next">
-							<i className="fas fa-long-arrow-right"></i>
-						</button>
-					</div>
-				</div>
-
 				<div className="outstanding-doctor-container">
 					<div className="doctor-content-up">
 						<div className="doctor-title">
@@ -361,10 +254,7 @@ class HomePage extends Component {
 					</div>
 					<div className="doctor-slide-container">
 						<div id="doctor-slide">
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -382,10 +272,7 @@ class HomePage extends Component {
 									</div>
 								</div>
 							</div>
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -403,10 +290,7 @@ class HomePage extends Component {
 									</div>
 								</div>
 							</div>
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -423,10 +307,7 @@ class HomePage extends Component {
 									</div>
 								</div>
 							</div>
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -443,10 +324,7 @@ class HomePage extends Component {
 									</div>
 								</div>
 							</div>
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -464,10 +342,7 @@ class HomePage extends Component {
 									</div>
 								</div>
 							</div>
-							<div
-								className="doctor-slide-item"
-								onclick="window.open('/outstanding-doctor/outstanding.html')"
-							>
+							<div className="doctor-slide-item">
 								<div
 									className="doctor-img"
 									style={{
@@ -549,7 +424,7 @@ class HomePage extends Component {
 						</div>
 						<div className="footer-support">
 							<h2>Hỗ trợ khách hàng</h2>
-							<p>support@bookingcare.vn (7h - 18h)</p>
+							<p>phamductinh.t18@gmail.com</p>
 						</div>
 					</div>
 				</div>
@@ -573,11 +448,16 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
 	return {
 		isLoggedIn: state.user.isLoggedIn,
+		userInfor: state.user.userInfo,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {};
+	return {
+		processLogout: () => dispatch(actions.processLogout()),
+		userLoginSuccess: (userInfo) =>
+			dispatch(actions.userLoginSuccess(userInfo)),
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

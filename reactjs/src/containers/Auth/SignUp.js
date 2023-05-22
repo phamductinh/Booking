@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { handleLoginAPI, handleCreateUser } from "../../services/userService";
+import { handleCreateUser } from "../../services/userService";
 import * as actions from "../../store/actions/";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,88 +15,31 @@ class SignUp extends Component {
 		this.state = {
 			email: "",
 			password: "",
-			newEmail: "",
-			newPassword: "",
 			confirmPass: "",
 			fullName: "",
-			address: "",
-			gender: "",
 			role: "",
-			phoneNumber: "",
 			errMsg: "",
 			errMsgSignUp: "",
-			setModalIsOpen: false,
-			setLoginOpen: true,
-			isShowRole: false,
 		};
 	}
 
-	handleOnchangeEmail = (event) => {
-		this.setState({
-			email: event.target.value,
-		});
-	};
-	handleOnchangePassword = (event) => {
-		this.setState({
-			password: event.target.value,
-		});
-	};
-
-	handleLogin = async () => {
-		this.setState({
-			errMsg: "",
-		});
-		try {
-			let data = await handleLoginAPI(
-				this.state.email,
-				this.state.password
-			);
-			if (data && data.code !== 200) {
-				this.setState({
-					errMsg: data.msg,
-				});
-			}
-			if (data && data.code === 200) {
-				this.props.userLoginSuccess(data.user);
-				localStorage.setItem("token", data.token);
-			}
-		} catch (error) {
-			if (error.response) {
-				if (error.response.data) {
-					this.setState({
-						errMsg: error.response.data.msg,
-					});
-				}
-			}
-		}
-	};
-
-
-
-	handleOnchangeModalInput = (event, id) => {
+	handleOnchangeInput = (event, id) => {
 		let copyState = { ...this.state };
 		copyState[id] = event.target.value;
 		this.setState({
 			...copyState,
 		});
+		console.log("check state", this.state);
 	};
 
 	validateModalInput = () => {
 		let isValid = true;
-		let arrInput = [
-			"newEmail",
-			"newPassword",
-			"confirmPass",
-			"fullName",
-			"address",
-			"gender",
-			"phoneNumber",
-		];
+		let arrInput = ["email", "password", "confirmPass", "fullName"];
 		for (let i = 0; i < arrInput.length; i++) {
 			if (!this.state[arrInput[i]]) {
 				isValid = false;
 				this.setState({
-					errMsgSignUp: "Missing input parameters !",
+					errMsgSignUp: "Vui lòng nhập đầy dủ thông tin!",
 				});
 				// alert("Missing " + arrInput[i]);
 				break;
@@ -110,35 +53,26 @@ class SignUp extends Component {
 			errMsgSignUp: "",
 		});
 		let newUserData = {
-			email: this.state.newEmail,
-			password: this.state.newPassword,
+			email: this.state.email,
+			password: this.state.password,
 			fullName: this.state.fullName,
-			address: this.state.address,
-			gender: this.state.gender,
 			role: this.state.role ? this.state.role : "User",
-			phoneNumber: this.state.phoneNumber,
 		};
 		let isValid = this.validateModalInput();
 		if (newUserData.password !== this.state.confirmPass) {
 			this.setState({
-				errMsgSignUp: "Passwords are not the same !",
+				errMsgSignUp: "Mật khẩu không trùng nhau!",
 			});
 		} else if (isValid === true) {
 			try {
 				let response = await handleCreateUser(newUserData);
-				toast.success("Create user successfully!");
+				toast.success("Tạo tài khoản thành công!");
 				console.log("check response", response);
 				this.setState({
-					newEmail: "",
-					newPassword: "",
+					email: "",
+					password: "",
 					confirmPass: "",
 					fullName: "",
-					address: "",
-					gender: "",
-					role: "",
-					phoneNumber: "",
-					setModalIsOpen: false,
-					setLoginOpen: true,
 				});
 			} catch (error) {
 				if (error.response) {
@@ -155,53 +89,90 @@ class SignUp extends Component {
 	render() {
 		return (
 			<div className="signup-container">
-				<div class="signup-box">
-					<h2>Create an Account</h2>
-					<form class="signup-form">
-						<div class="form-container">
-							<div class="input-group">
-								<label for="username">Fullname</label>
+				<div className="signup-box">
+					<h2>Tạo tài khoản</h2>
+					<form className="signup-form">
+						<div className="form-container">
+							<div className="input-group">
+								<label>Họ và tên:</label>
 								<input
 									type="text"
-									name="username"
-									id="username"
+									name="fullName"
+									id="fullName"
+									autoComplete="off"
+									value={this.state.fullName}
+									onChange={(event) =>
+										this.handleOnchangeInput(
+											event,
+											"fullName"
+										)
+									}
 								/>
-								<i class="fa-solid fa-user"></i>
+								<i className="fa-solid fa-user"></i>
 							</div>
-							<div class="input-group">
-								<label for="username">Email</label>
+							<div className="input-group">
+								<label>Email:</label>
 								<input
-									type="text"
-									name="username"
-									id="username"
+									type="email"
+									name="email"
+									id="email"
+									autoComplete="off"
+									value={this.state.email}
+									onChange={(event) =>
+										this.handleOnchangeInput(event, "email")
+									}
 								/>
-								<i class="fa-solid fa-envelope"></i>
+								<i className="fa-solid fa-envelope"></i>
 							</div>
-							<div class="input-group">
-								<label for="password">Password</label>
+							<div className="input-group">
+								<label>Mật khẩu:</label>
 								<input
 									type="password"
 									name="password"
 									id="password"
+									autoComplete="off"
+									value={this.state.password}
+									onChange={(event) =>
+										this.handleOnchangeInput(
+											event,
+											"password"
+										)
+									}
 								/>
-								<i class="fa-solid fa-lock"></i>
+								<i className="fa-solid fa-lock"></i>
 							</div>
-							<div class="input-group">
-								<label for="password">Confirm Password</label>
+							<div className="input-group">
+								<label>Nhập lại mật khẩu:</label>
 								<input
 									type="password"
-									name="password"
-									id="password"
+									name="cf-password"
+									id="cf-password"
+									autoComplete="off"
+									value={this.state.confirmPass}
+									onChange={(event) =>
+										this.handleOnchangeInput(
+											event,
+											"confirmPass"
+										)
+									}
 								/>
-								<i class="fa-solid fa-lock"></i>
+								<i className="fa-solid fa-lock"></i>
 							</div>
 						</div>
-						<div class="signup-btn">
-							<button class="btn-signup">Sign up</button>
+						<div className="errMsgSignUp">
+							{this.state.errMsgSignUp}
 						</div>
-						<p class="member">
-							Already have an account ?
-							<Link to="/login">Login</Link>
+						<div className="signup-btn">
+							<button
+								type="button"
+								className="btn-signup"
+								onClick={() => this.handleAddNewUser()}
+							>
+								Sign up
+							</button>
+						</div>
+						<p className="member">
+							Đã có tài khoản ?<Link to="/login">Đăng nhập</Link>
 						</p>
 					</form>
 				</div>
@@ -219,10 +190,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		navigate: (path) => dispatch(push(path)),
-		userLoginSuccess: (userInfor) =>
-			dispatch(actions.userLoginSuccess(userInfor)),
-		adminLoginSuccess: (adminInfor) =>
-			dispatch(actions.adminLoginSuccess(adminInfor)),
 	};
 };
 

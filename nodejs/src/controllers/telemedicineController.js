@@ -10,7 +10,7 @@ const getAllTelemedicine = (req, res) => {
 		if (error) {
 			return res.status(500).send({
 				code: 500,
-				msg: errMsg.failed,
+				msg: "Error fetch data !",
 			});
 		} else {
 			return res.status(200).send({

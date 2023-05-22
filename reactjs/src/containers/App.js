@@ -18,7 +18,9 @@ import SignUp from "./Auth/SignUp";
 // import Login from '../routes/Login';
 import System from "../routes/System";
 import HomePage from "./HomePage/HomePage";
+import ManageBooking from "./System/ManageBooking";
 import CustomScrollbars from "../components/CustomScrollbars";
+import PrivateRoute from "../routes/PrivateRoute";
 
 class App extends Component {
 	handlePersistorState = () => {
@@ -40,6 +42,7 @@ class App extends Component {
 	}
 
 	render() {
+		let userInfo = this.props.userInfo;
 		return (
 			<Fragment>
 				<Router history={history}>
@@ -68,12 +71,33 @@ class App extends Component {
 									/>
 									<Route
 										path={path.SYSTEM}
-										component={userIsAuthenticated(System)}
+										render={(props) => (
+											<PrivateRoute
+												{...props}
+												userInfo={userInfo}
+												allowedRoles={["Admin"]}
+												component={userIsAuthenticated(
+													System
+												)}
+											/>
+										)}
 									/>
 
 									<Route
 										path={path.HOMEPAGE}
 										component={HomePage}
+									/>
+									<Route
+										exact
+										path={path.MANAGE_BOOKING}
+										render={(props) => (
+											<PrivateRoute
+												{...props}
+												userInfo={userInfo}
+												allowedRoles={["Doctor"]}
+												component={ManageBooking}
+											/>
+										)}
 									/>
 								</Switch>
 							</CustomScrollbars>
@@ -102,6 +126,7 @@ const mapStateToProps = (state) => {
 	return {
 		started: state.app.started,
 		isLoggedIn: state.user.isLoggedIn,
+		userInfo: state.user.userInfo,
 	};
 };
 

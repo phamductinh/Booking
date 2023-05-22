@@ -87,7 +87,7 @@ let deleteUser = (req, res) => {
 			if (error) throw error;
 			return res.send({
 				code: 200,
-				msg: successMsg.dalete_user_succeed,
+				msg: successMsg.delete_user_succeed,
 			});
 		});
 	});

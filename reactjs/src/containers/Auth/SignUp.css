@@ -79,6 +79,11 @@ body {
 	color: rgb(173, 172, 172);
 }
 
+.errMsgSignUp {
+	margin-top: 10px;
+    color: rgb(226, 112, 92);
+}
+
 .btn-signup {
 	padding: 10px;
 	margin: 20px auto;

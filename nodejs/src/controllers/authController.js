@@ -51,7 +51,7 @@ let login = async (req, res) => {
 	if (!email || !password) {
 		return res.status(500).send({
 			code: 500,
-			msg: "Missing email or password!",
+			msg: "Vui lòng nhập đầy đủ thông tin!",
 		});
 	}
 	await db.query(
@@ -63,7 +63,7 @@ let login = async (req, res) => {
 			if (!result.length) {
 				return res.status(400).send({
 					code: 400,
-					msg: "Incorrect email!",
+					msg: "Email không hợp lệ!",
 				});
 			}
 			// check password
@@ -73,30 +73,16 @@ let login = async (req, res) => {
 					throw bErr;
 				}
 				if (bResult) {
-					let token = jwt.sign(
-						{
-							id: result[0].id,
-							fullName: result[0].fullName,
-							address: result[0].address,
-							gender: result[0].gender,
-							role: result[0].role,
-							phoneNumber: result[0].phoneNumber,
-						},
-						secretKey,
-						{
-							expiresIn: "1d",
-						}
-					);
+					delete result[0].password;
 					return res.status(200).send({
 						code: 200,
 						msg: "Logged in!",
-						token,
 						user: result[0],
 					});
 				}
 				return res.status(401).send({
 					code: 401,
-					msg: "Email or password is incorrect!",
+					msg: "Email hoặc mật khẩu không đúng!",
 				});
 			});
 		}

@@ -32,7 +32,9 @@ let updateSpecialtyQuery =
 
 let deleteSpecialtyById = `DELETE FROM specialty WHERE id = ?`;
 
-let findDoctor = `SELECT * FROM user`
+let findAllDoctor = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId`;
+
+let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialty = ?`;
 
 module.exports = {
 	findAllUsers,
@@ -47,8 +49,9 @@ module.exports = {
 	createNewSpecialtyQuery,
 	deleteSpecialtyById,
 	deleteTelemedicineById,
-    updateTelemedicineQuery,
-    updateSpecialtyQuery,
-    findTelemedicineById,
-    findDoctor
+	updateTelemedicineQuery,
+	updateSpecialtyQuery,
+	findTelemedicineById,
+	findAllDoctor,
+    findDoctorBySpecialty
 };

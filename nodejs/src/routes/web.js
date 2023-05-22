@@ -46,7 +46,9 @@ let initWebRoutes = (app) => {
 	);
 	router.put("/api/update-specialty", specialtyController.updateSpecialty);
 
+	router.get("/api/get-all-doctor", doctorController.getAllDoctor);
 	router.get("/api/get-doctor", doctorController.getDoctorByKeyword);
+	router.get("/api/get-doctor-by-specialty", doctorController.getDoctorBySpecialty);
 
 	return app.use("/", router);
 };

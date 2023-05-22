@@ -14,19 +14,7 @@ class Login extends Component {
 		this.state = {
 			email: "",
 			password: "",
-			newEmail: "",
-			newPassword: "",
-			confirmPass: "",
-			fullName: "",
-			address: "",
-			gender: "",
-			role: "",
-			phoneNumber: "",
 			errMsg: "",
-			errMsgSignUp: "",
-			setModalIsOpen: false,
-			setLoginOpen: true,
-			isShowRole: false,
 		};
 	}
 
@@ -57,7 +45,6 @@ class Login extends Component {
 			}
 			if (data && data.code === 200) {
 				this.props.userLoginSuccess(data.user);
-				localStorage.setItem("token", data.token);
 			}
 		} catch (error) {
 			if (error.response) {
@@ -68,37 +55,6 @@ class Login extends Component {
 				}
 			}
 		}
-	};
-
-	handleOpenModal() {
-		this.setState({
-			setModalIsOpen: true,
-			setLoginOpen: false,
-		});
-	}
-
-	handleCloseModal() {
-		this.setState({
-			setModalIsOpen: false,
-			setLoginOpen: true,
-			newEmail: "",
-			newPassword: "",
-			confirmPass: "",
-			fullName: "",
-			address: "",
-			gender: "",
-			role: "",
-			phoneNumber: "",
-			errMsgSignUp: "",
-		});
-	}
-
-	handleOnchangeModalInput = (event, id) => {
-		let copyState = { ...this.state };
-		copyState[id] = event.target.value;
-		this.setState({
-			...copyState,
-		});
 	};
 
 	validateModalInput = () => {
@@ -125,104 +81,58 @@ class Login extends Component {
 		return isValid;
 	};
 
-	handleAddNewUser = async (data) => {
-		this.setState({
-			errMsgSignUp: "",
-		});
-		let newUserData = {
-			email: this.state.newEmail,
-			password: this.state.newPassword,
-			fullName: this.state.fullName,
-			address: this.state.address,
-			gender: this.state.gender,
-			role: this.state.role ? this.state.role : "User",
-			phoneNumber: this.state.phoneNumber,
-		};
-		let isValid = this.validateModalInput();
-		if (newUserData.password !== this.state.confirmPass) {
-			this.setState({
-				errMsgSignUp: "Passwords are not the same !",
-			});
-		} else if (isValid === true) {
-			try {
-				let response = await handleCreateUser(newUserData);
-				toast.success("Create user successfully!");
-				console.log("check response", response);
-				this.setState({
-					newEmail: "",
-					newPassword: "",
-					confirmPass: "",
-					fullName: "",
-					address: "",
-					gender: "",
-					role: "",
-					phoneNumber: "",
-					setModalIsOpen: false,
-					setLoginOpen: true,
-				});
-			} catch (error) {
-				if (error.response) {
-					if (error.response.data) {
-						this.setState({
-							errMsgSignUp: error.response.data.msg,
-						});
-					}
-				}
-			}
-		}
-	};
-
 	render() {
 		return (
 			<>
 				<div className="login-container">
-					<div class="login-box">
-						<h2>Login</h2>
-						<form class="login-form">
-							<div class="user-box">
+					<div className="login-box">
+						<h2>Đăng nhập</h2>
+						<form className="login-form">
+							<div className="user-box">
 								<input
 									type="text"
-									name=""
-									required=""
 									id="email"
+									required=""
+									autoComplete="off"
 									value={this.state.email}
 									onChange={(event) =>
 										this.handleOnchangeEmail(event)
 									}
 								/>
-								<label>Email</label>
-								<i class="fa-solid fa-envelope"></i>
+								<label>Email:</label>
+								<i className="fa-solid fa-envelope"></i>
 							</div>
-							<div class="user-box">
+							<div className="user-box">
 								<input
 									type="password"
-									name=""
-									required=""
 									id="password"
+									required=""
+									autoComplete="off"
 									value={this.state.password}
 									onChange={(event) =>
 										this.handleOnchangePassword(event)
 									}
 								/>
-								<label>Password</label>
-								<i class="fa-solid fa-lock"></i>
+								<label>Mật khẩu:</label>
+								<i className="fa-solid fa-lock"></i>
 							</div>
 							<div className="errMsg" style={{ color: "red" }}>
 								{this.state.errMsg}
 							</div>
-							<Link to="/" class="forgot-pass">
-								Forgot password ?
+							<Link to="/" className="forgot-pass">
+								Quên mật khẩu ?
 							</Link>
 							<div>
 								<button
-									class="btn-login"
+									type="button"
+									className="btn-login"
 									onClick={() => this.handleLogin()}
 								>
 									Login
 								</button>
 							</div>
-							<p class="not-member">
-								Not a member ?<Link to="/sign-up">Sign Up</Link>
+							<p className="not-member">
+								Chưa có tài khoản ?<Link to="/sign-up">Đăng kí</Link>
 							</p>
 						</form>
 					</div>
@@ -392,10 +302,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		navigate: (path) => dispatch(push(path)),
-		userLoginSuccess: (userInfor) =>
-			dispatch(actions.userLoginSuccess(userInfor)),
-		adminLoginSuccess: (adminInfor) =>
-			dispatch(actions.adminLoginSuccess(adminInfor)),
+		userLoginSuccess: (userInfo) =>
+			dispatch(actions.userLoginSuccess(userInfo)),
 	};
 };
 

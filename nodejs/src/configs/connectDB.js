@@ -4,7 +4,7 @@ let connectDB = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "",
-	database: "bookingcare",
+	database: "datlichkhambenh",
 });
 
 connectDB.connect(function (err) {

@@ -4,16 +4,26 @@ import { connect } from "react-redux";
 
 class Home extends Component {
 	render() {
-		const { isLoggedIn } = this.props;
-		let linkToRedirect = isLoggedIn ? "/system/user-manage" : "/home";
-
-		return <Redirect to={linkToRedirect} />;
+		const isLoggedIn = this.props.isLoggedIn;
+		const userInfo = this.props.userInfo;
+		if (isLoggedIn) {
+			if (userInfo && userInfo.role === "Admin") {
+				return <Redirect to={"/system/user-manage"} />;
+			} else if (userInfo && userInfo.role === "User") {
+				return <Redirect to={"/home"} />;
+			} else if (userInfo && userInfo.role === "Doctor") {
+				return <Redirect to={"/manage-booking"} />;
+			}
+		} else {
+			return <Redirect to={"/home"} />;
+		}
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
 		isLoggedIn: state.user.isLoggedIn,
+		userInfo: state.user.userInfo,
 	};
 };
 

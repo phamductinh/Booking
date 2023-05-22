@@ -1,17 +1,18 @@
 export const errMsg = {
-    missing_input: "Missing input parameters!",
-    inUsed: "This user is already in used!",
-    wr_password: "The password must include a special character, capitalize the first letter and have at least 8 characters!",
-    wr_email: "Please provide a valid email!",
-    wr_fullname: "Fullname can't contain special characters and number!",
-    wr_address: "Address can't contain special characters!",
-    failed: "Failed to fetch!",
-    not_exist: "User does not exist!",
-    cant_change: "Email and password can't be changed!"
-}
+	missing_input: "Vui lòng nhập đầy đủ thông tin!",
+	inUsed: "Tài khoản đã có người sử dụng!",
+	wr_password:
+		"Mật khẩu phải bao gồm ký tự đặc biệt, viết hoa chữ cái đầu và ít nhất 8 ký tự!",
+	wr_email: "Email không hợp lệ!",
+	wr_fullname: "Tên không thể có ký tự đặc biệt và số!",
+	wr_address: "Địa chỉ không thể có ký tự đặc biệt!",
+	failed: "Truy cập thất bại!",
+	not_exist: "Nguời dùng không tồn tại!",
+	cant_change: "Email và mật khẩu không được thay đổi!",
+};
 
 export const successMsg = {
-    create_user_succeed: "Create a user successfully!",
-    update_user_succeed: "User has been updated successfully!",
-    dalete_user_succeed: "User has been deleted successfully!"
-}
+	create_user_succeed: "Tạo người dùng thành công!",
+	update_user_succeed: "Sửa thông tin thành công!",
+	delete_user_succeed: "Xóa người dùng thành công!",
+};
