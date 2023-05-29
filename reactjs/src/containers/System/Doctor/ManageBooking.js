@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/";
+import * as actions from "../../../store/actions";
 import "./ManageBooking.css";
+import Header from "../../Header/Header";
 import { Link } from "react-router-dom";
 
 class ManageBooking extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			
-		};
+		this.state = {};
 	}
 
-	componentDidMount() {
-	}
-
-	
+	componentDidMount() {}
 
 	render() {
 		return (
-			<div className="test">hello</div>
+			<>
+				{this.props.isLoggedIn && <Header />}
+
+				<div className="test">manage booking</div>
+			</>
 		);
 	}
 }

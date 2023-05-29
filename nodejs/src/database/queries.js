@@ -32,9 +32,11 @@ let updateSpecialtyQuery =
 
 let deleteSpecialtyById = `DELETE FROM specialty WHERE id = ?`;
 
-let findAllDoctor = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId`;
+let findAllDoctor = `SELECT user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor"`;
 
-let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialty = ?`;
+let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialtyId = ?`;
+
+let findDoctorByIdQuery = `SELECT user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor" AND doctor.id = ?`;
 
 module.exports = {
 	findAllUsers,
@@ -53,5 +55,6 @@ module.exports = {
 	updateSpecialtyQuery,
 	findTelemedicineById,
 	findAllDoctor,
-    findDoctorBySpecialty
+	findDoctorBySpecialty,
+	findDoctorByIdQuery,
 };

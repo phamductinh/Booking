@@ -1,31 +1,41 @@
 export const adminMenu = [
 	{
 		//quản lý người dùng
-		name: "menu.admin.manage-user",
+		name: "menu.admin.admin",
 		menus: [
 			{
 				name: "menu.admin.manage-user",
 				link: "/system/user-manage",
 			},
-		],
-	},
-	{
-		//quản lý người dùng
-		name: "menu.admin.manage-telemedicine",
-		menus: [
 			{
-				name: "menu.admin.manage-telemedicine",
-				link: "/system/manage-telemedicine",
+				name: "menu.doctor.manage-doctor",
+				link: "/system/manage-doctor",
 			},
 		],
 	},
 	{
-		//quản lý người dùng
-		name: "menu.admin.manage-specialty",
+		//quản lý bac si
+		name: "menu.doctor.doctor",
 		menus: [
 			{
-				name: "menu.admin.manage-specialty",
-				link: "/system/manage-specialty",
+				name: "menu.doctor.manage-booking",
+				link: "/doctor/manage-booking",
+			},
+		],
+	},
+];
+export const doctorMenu = [
+	{
+		//quản lý bac si
+		name: "menu.doctor.doctor",
+		menus: [
+			{
+				name: "menu.doctor.manage-doctor-infor",
+				link: "/doctor/manage-doctor-infor",
+			},
+			{
+				name: "menu.doctor.manage-booking",
+				link: "/doctor/manage-booking",
 			},
 		],
 	},

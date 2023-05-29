@@ -9,10 +9,10 @@ class Home extends Component {
 		if (isLoggedIn) {
 			if (userInfo && userInfo.role === "Admin") {
 				return <Redirect to={"/system/user-manage"} />;
+			} else if (userInfo && userInfo.role === "Doctor") {
+				return <Redirect to={"/doctor/manage-doctor-infor"} />;
 			} else if (userInfo && userInfo.role === "User") {
 				return <Redirect to={"/home"} />;
-			} else if (userInfo && userInfo.role === "Doctor") {
-				return <Redirect to={"/manage-booking"} />;
 			}
 		} else {
 			return <Redirect to={"/home"} />;

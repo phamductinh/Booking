@@ -1,0 +1,356 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+* {
+	padding: 0;
+	margin: 0;
+	font: 14px/1.5 "Montserrat", sans-serif;
+}
+.detail-doctor-header {
+	height: 60px;
+	width: 100%;
+	position: relative;
+	display: flex;
+	background: #45c3d2;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.detail-doctor-header-left {
+	width: 70%;
+	padding: 17px 20px;
+	display: inline-flex;
+}
+.detail-doctor-header-left i {
+	font-size: 20px;
+	padding: 2px 20px;
+	cursor: pointer;
+	color: white;
+}
+.detail-doctor-header-left h2 {
+	display: inline-block;
+	font-size: 17px;
+	color: #ffffff;
+}
+.detail-doctor-header-right {
+	position: absolute;
+	display: inline-flex;
+	padding: 20px 20px;
+	right: 0;
+}
+.detail-doctor-header-right .fas {
+	font-size: 22px;
+	color: #ffffff;
+	padding: 0 20px;
+	cursor: pointer;
+}
+.detail-doctor-header-support {
+	color: #ffffff;
+	cursor: pointer;
+}
+.detail-doctor-header-right i {
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.detail-doctor-infor {
+	padding: 20px 70px;
+	display: flex;
+}
+.detail-doctor-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	margin-right: 50px;
+}
+.detail-doctor-infors {
+	width: 60%;
+}
+.detail-doctor-infors h1 {
+	font-size: 27px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.detail-doctor-infors p {
+	font-size: 13px;
+	color: #555;
+}
+
+.detail-doctor-schedule {
+	padding: 20px 80px;
+	display: flex;
+}
+.detail-doctor-schedule-left {
+	width: 50%;
+}
+.date-chooser {
+	outline: none;
+	border: none;
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 15px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #555;
+}
+.detail-doctor-schedule-left h2 {
+	margin: 10px 0 20px 0;
+	color: #333;
+	font-weight: bold;
+}
+.detail-doctor-schedule-left i {
+	padding-right: 8px;
+}
+.available-schedule {
+	position: relative;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+.available-schedule a {
+	padding: 10px 10px;
+	background: #fff8ae;
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+	cursor: pointer;
+}
+.available-schedule a i {
+	color: #388e3c;
+}
+.available-schedule a:hover {
+	border: 1px solid #45c3d2;
+}
+.choose-and-book p {
+	padding-bottom: 10px;
+	margin-top: 20px;
+	font-size: 12px;
+	color: #333;
+}
+.choose-and-book p i {
+	color: #555;
+}
+.exam-address {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #efefef;
+}
+.exam-address h3 {
+	padding: 10px 0 5px 15px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #666;
+}
+.exam-address p {
+	padding-left: 15px;
+}
+.exam-price h3 {
+	border-bottom: 1px solid #efefef;
+	padding: 15px;
+	font-size: 15px;
+	color: #666;
+}
+.exam-price h3 strong {
+	font-weight: 600;
+}
+.exam-price h3 a {
+	padding-left: 10px;
+	font-size: 15px;
+	color: #45c3d2;
+	cursor: pointer;
+	text-decoration: none;
+}
+.insurance h3 {
+	padding: 15px;
+	font-size: 15px;
+	color: #666;
+}
+.insurance h3 strong {
+	font-weight: 600;
+}
+.insurance h3 a {
+	padding-left: 10px;
+	font-size: 15px;
+	color: #45c3d2;
+	cursor: pointer;
+	text-decoration: none;
+}
+.detail-doctor-introduction {
+	width: 100%;
+	height: auto;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: #f9f9f9;
+	padding: 20px 80px;
+}
+.detail-doctor-introduction h2 {
+	font-weight: 600;
+	font-size: 14px;
+	padding: 10px 0px;
+}
+.detail-doctor-introduction ul {
+	padding-left: 20px;
+}
+.introduction {
+	width: 1200px;
+	height: auto;
+	margin: 30px auto;
+}
+.bookingcare-role-btn {
+	padding: 6px 12px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	width: 100%;
+	height: auto;
+	border: 1px solid #ccc;
+}
+.bookingcare-role-btn p {
+	text-decoration: none;
+	color: #45c3d2;
+	text-align: center;
+}
+.hiden-introduction {
+	display: none;
+}
+.hiden-introduction p {
+	font-weight: 600;
+	padding: 10px 0;
+}
+.hiden-introduction p span {
+	margin: 10px 0;
+}
+.hiden-introduction ul {
+	margin: 0 25px;
+}
+
+.more-questions {
+	height: 50px;
+	width: 100%;
+	background: #006e6f;
+}
+.more-questions p {
+	padding: 13px 80px;
+	font-size: 14px;
+	color: #fff;
+}
+.more-questions p a {
+	color: #fff04b;
+	font-weight: bold;
+	padding-left: 5px;
+	text-decoration: none;
+}
+
+/* footer */
+.footer1 {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	display: flex;
+	background: #efefef;
+	border-bottom: 3px solid #efeef5;
+}
+.company-infor {
+	width: 50%;
+	height: 350px;
+}
+.company-logo {
+	background: url(https://bookingcare.vn/assets/icon/bookingcare-2020.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	margin: 30px 0 10px 70px;
+	height: 60px;
+	width: 100%;
+}
+.company-address {
+	margin-left: 70px;
+}
+.company-address h2 {
+	padding-bottom: 5px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.company-address p {
+	padding: 3px 0;
+}
+.company-address p i {
+	font-size: 15px;
+	margin-right: 7px;
+}
+.registered {
+	display: flex;
+	margin-left: 70px;
+	margin-top: 10px;
+}
+.registered-1 {
+	background: url(https://bookingcare.vn/assets/icon/bo-cong-thuong.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	margin-right: 20px;
+	height: 40px;
+	width: 90px;
+	cursor: pointer;
+}
+.registered-2 {
+	background: url(https://bookingcare.vn/assets/icon/bo-cong-thuong.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 40px;
+	width: 90px;
+	cursor: pointer;
+}
+.list-features {
+	width: 25%;
+	height: 350px;
+}
+.list-features ul {
+	margin: 20px 20px;
+}
+.list-features ul li {
+	list-style: none;
+	padding: 6px;
+}
+.list-features ul li a {
+	text-decoration: none;
+	color: #1cbfd1;
+}
+.more-infor {
+	width: 25%;
+	height: 350px;
+	padding: 20px 20px;
+}
+.more-infor h2 {
+	font-size: 15px;
+	font-weight: 600;
+}
+.headquarter {
+	margin-bottom: 20px;
+}
+.office {
+	margin-bottom: 20px;
+}
+
+.footer2 {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	background: #1cbfd1;
+}
+.footer-left {
+	text-align: center;
+	width: 50%;
+}
+.footer-left p {
+	padding: 19px;
+}
+.footer-right {
+	width: 50%;
+	text-align: center;
+}
+.footer-right i {
+	font-size: 20px;
+	padding: 20px;
+	cursor: pointer;
+}

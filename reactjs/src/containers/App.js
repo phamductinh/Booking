@@ -18,9 +18,10 @@ import SignUp from "./Auth/SignUp";
 // import Login from '../routes/Login';
 import System from "../routes/System";
 import HomePage from "./HomePage/HomePage";
-import ManageBooking from "./System/ManageBooking";
 import CustomScrollbars from "../components/CustomScrollbars";
 import PrivateRoute from "../routes/PrivateRoute";
+import Doctor from "../routes/Doctor";
+import DetailDoctor from "./System/Doctor/DetailDoctor";
 
 class App extends Component {
 	handlePersistorState = () => {
@@ -75,9 +76,28 @@ class App extends Component {
 											<PrivateRoute
 												{...props}
 												userInfo={userInfo}
-												allowedRoles={["Admin"]}
+												allowedRoles={[
+													"Admin",
+													"Doctor",
+												]}
 												component={userIsAuthenticated(
 													System
+												)}
+											/>
+										)}
+									/>
+									<Route
+										path={path.DOCTOR}
+										render={(props) => (
+											<PrivateRoute
+												{...props}
+												userInfo={userInfo}
+												allowedRoles={[
+													"Admin",
+													"Doctor",
+												]}
+												component={userIsAuthenticated(
+													Doctor
 												)}
 											/>
 										)}
@@ -88,16 +108,8 @@ class App extends Component {
 										component={HomePage}
 									/>
 									<Route
-										exact
-										path={path.MANAGE_BOOKING}
-										render={(props) => (
-											<PrivateRoute
-												{...props}
-												userInfo={userInfo}
-												allowedRoles={["Doctor"]}
-												component={ManageBooking}
-											/>
-										)}
+										path={"/detail-doctor/:id"}
+										component={DetailDoctor}
 									/>
 								</Switch>
 							</CustomScrollbars>

@@ -6,7 +6,7 @@ const getAllSpecialty = (req, res) => {
 		if (error) {
 			return res.status(500).send({
 				code: 500,
-				msg: "Error fetch data !",
+				msg: "Có gì đó sai sai!",
 			});
 		} else {
 			return res.status(200).send({

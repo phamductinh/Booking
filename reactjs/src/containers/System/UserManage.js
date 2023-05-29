@@ -85,13 +85,14 @@ class UserManage extends Component {
 			role: "",
 			phoneNumber: "",
 			errMsgSignUp: "",
+            isLoading: false
 		});
 	}
 
-	handleOnchangeModalInput = (event, id) => {
+	handleOnchangeModalInput = async (event, id) => {
 		let copyState = { ...this.state };
 		copyState[id] = event.target.value;
-		this.setState({
+		await this.setState({
 			...copyState,
 		});
 		console.log(this.state);
@@ -248,19 +249,22 @@ class UserManage extends Component {
 					<div className="users-table mt-3 mx-3">
 						<table id="customers">
 							<tr>
-								<th width="25%" className="text-center">
+								<th width="20%" className="text-center">
 									Email
 								</th>
-								<th width="25%" className="text-center">
+								<th width="20%" className="text-center">
 									Họ và tên
 								</th>
-								<th width="18%" className="text-center">
+								<th width="15%" className="text-center">
 									Giới tính
 								</th>
-								<th width="18%" className="text-center">
+								<th width="15%" className="text-center">
 									Vai trò
 								</th>
-								<th width="14%" className="text-center">
+								<th width="15%" className="text-center">
+									Liên lạc
+								</th>
+								<th width="15%" className="text-center">
 									Actions
 								</th>
 							</tr>
@@ -273,6 +277,7 @@ class UserManage extends Component {
 											<td>{item.fullName}</td>
 											<td>{item.gender}</td>
 											<td>{item.role}</td>
+											<td>{item.phoneNumber}</td>
 											<td className="text-center">
 												<button
 													className="btn-edit"

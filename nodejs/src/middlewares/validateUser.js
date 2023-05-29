@@ -14,9 +14,6 @@ function validatePassword(password) {
 }
 
 function validateFullName(fullName) {
-	if (fullName.length > 100) {
-		return false;
-	}
 	let regex = /^[a-zA-Z\s]+$/;
 	return regex.test(fullName);
 }

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getALLTelemedicine } from "../../services/telemedicineService";
+import { getALLSpecialty } from "../../services/specialtyService";
+import { findAllDoctorService } from "../../services/doctorService";
 import * as actions from "../../store/actions/";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
+import Fuse from "fuse.js";
+import { withRouter } from "react-router";
 
 class HomePage extends Component {
 	constructor(props) {
@@ -11,21 +14,36 @@ class HomePage extends Component {
 		this.state = {
 			arrTelems: [],
 			arrSpecialty: [],
-			isOpenMenu: true,
+			arrDoctors: [],
+			arrDoctorFilter: [],
+			specialty: "",
+			keyword: "",
+			isOpenMenu: false,
 		};
 	}
 
 	componentDidMount() {
-		this.getALLTelemedicineReact();
+		this.getALLSpecialtyHome();
+		this.getALLDoctorsHome();
 	}
 
-	getALLTelemedicineReact = async () => {
-		let res = await getALLTelemedicine();
+	getALLSpecialtyHome = async () => {
+		let res = await getALLSpecialty();
 		if (res && res.code === 200) {
 			this.setState({
-				arrTelems: res.data,
+				arrSpecialty: res.data,
 			});
 		}
+	};
+
+	getALLDoctorsHome = async () => {
+		let res = await findAllDoctorService();
+		if (res && res.code === 200) {
+			this.setState({
+				arrDoctors: res.data,
+			});
+		}
+		console.log(this.state.arrDoctors);
 	};
 
 	handleOpenMenu() {
@@ -34,19 +52,67 @@ class HomePage extends Component {
 		}));
 	}
 
+	handleOnchangeKeyword = async (event) => {
+		await this.setState({
+			keyword: event.target.value,
+		});
+	};
+
+	handleOnchangeSelect = async (event) => {
+		await this.setState({
+			specialty: event.target.value,
+		});
+	};
+
+	filterDoctors() {
+		let arrDoctors = this.state.arrDoctors;
+		let { keyword, specialty } = this.state;
+		let filteredResults;
+		const fuse = new Fuse(arrDoctors, {
+			keys: ["fullName", "specialtyId"],
+		});
+		if (keyword && specialty) {
+			filteredResults = fuse
+				.search({
+					$and: [{ fullName: keyword }, { specialtyId: specialty }],
+				})
+				.map((result) => result.item);
+		} else if (keyword) {
+			filteredResults = fuse
+				.search({ fullName: keyword })
+				.map((result) => result.item);
+		} else if (specialty) {
+			filteredResults = fuse
+				.search({ specialtyId: specialty })
+				.map((result) => result.item);
+		} else {
+			filteredResults = "";
+		}
+		console.log("filter", filteredResults);
+		this.setState({
+			arrDoctorFilter: filteredResults,
+		});
+	}
+
+	handleViewDetail = (doctor) => {
+		console.log("check doctor", doctor);
+		this.props.history.push(`/detail-doctor/${doctor.id}`);
+	};
+
 	handleNext() {
-		let lists = document.querySelectorAll(".telem-slide-item");
-		document.getElementById("telem-slide").appendChild(lists[0]);
+		let lists = document.querySelectorAll(".doctor-slide-item");
+		document.getElementById("doctor-slide").appendChild(lists[0]);
 	}
 	handlePrev() {
-		let lists = document.querySelectorAll(".telem-slide-item");
-		document.getElementById("telem-slide").prepend(lists[lists.length - 1]);
+		let lists = document.querySelectorAll(".doctor-slide-item");
+		document
+			.getElementById("doctor-slide")
+			.prepend(lists[lists.length - 1]);
 	}
 
 	render() {
-		let { arrTelems, isOpenMenu } = this.state;
+		let { arrSpecialty, isOpenMenu, arrDoctorFilter } = this.state;
 		const { processLogout, userInfor, isLoggedIn } = this.props;
-
 		return (
 			<div className="homepage-container">
 				<div id="header" className="header-homepage">
@@ -72,10 +138,10 @@ class HomePage extends Component {
 								<div className="flag-en"></div>
 							</div>
 							{!isLoggedIn ? (
-								<button class="btn-login-header">
+								<button className="btn-login-header">
 									<Link to="/login">Login</Link>
-									<div class="arrow-wrapper">
-										<div class="arrow"></div>
+									<div className="arrow-wrapper">
+										<div className="arrow"></div>
 									</div>
 								</button>
 							) : (
@@ -177,23 +243,89 @@ class HomePage extends Component {
 				<div className="search-container">
 					<div className="search-box">
 						<input
+							className="search-input"
 							type="text"
 							autoComplete="off"
 							placeholder="Nhập tên bác sĩ"
+							onChange={(event) =>
+								this.handleOnchangeKeyword(event)
+							}
 						/>
-						<select name="specialty" id="specialty-select">
-							<option value="" disabled selected>
+						<select
+							name="specialty"
+							id="specialty-select"
+							value={this.state.specialty}
+							onChange={(event) =>
+								this.handleOnchangeSelect(event, "specialty")
+							}
+							defaultValue={""}
+						>
+							<option value="" disabled defaultValue>
 								Chọn chuyên khoa
 							</option>
-							<option value="Nam">Nam</option>
-							<option value="Nữ">Nữ</option>
-							<option value="Khác">Khác</option>
+							{arrSpecialty &&
+								arrSpecialty.length > 0 &&
+								arrSpecialty.map((item, index) => (
+									<option key={index} value={item.id}>
+										{item.name}
+									</option>
+								))}
 						</select>
-						<button className="btn-search-doctor">Search</button>
+						<button
+							className="btn-search-doctor"
+							onClick={() => this.filterDoctors()}
+						>
+							<i className="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</div>
+					<div className="search-results">
+						<div className="search-results-list">
+							{arrDoctorFilter &&
+								arrDoctorFilter.length > 0 &&
+								arrDoctorFilter.map((item, index) => {
+									return (
+										<div
+											className="result-content"
+											key={index}
+											onClick={() =>
+												this.handleViewDetail(item)
+											}
+										>
+											<div
+												className="result-img"
+												style={{
+													backgroundImage: `url(${
+														item.image !== null
+															? Buffer.from(
+																	item.image,
+																	"base64"
+															  ).toString(
+																	"binary"
+															  )
+															: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+													})`,
+												}}
+											></div>
+											<div className="result-infor">
+												<div className="result-name">
+													{item.fullName
+														? item.fullName
+														: "Unknown name"}
+												</div>
+												<div className="result-specialty">
+													{item.specialtyName
+														? item.specialtyName
+														: ""}
+												</div>
+											</div>
+										</div>
+									);
+								})}
+						</div>
 					</div>
 				</div>
 
-				<div className="telemedicine-container">
+				{/* <div className="telemedicine-container">
 					<div className="telem-content-up">
 						<div className="telem-title">
 							Bác sĩ từ xa qua Video
@@ -243,7 +375,7 @@ class HomePage extends Component {
 							onClick={() => this.handleNext()}
 						></button>
 					</div>
-				</div>
+				</div> */}
 
 				<div className="outstanding-doctor-container">
 					<div className="doctor-content-up">
@@ -363,10 +495,18 @@ class HomePage extends Component {
 						</div>
 					</div>
 					<div className="doctor-buttons">
-						<button className="doctor-prev" id="doctor-prev">
+						<button
+							className="doctor-prev"
+							id="doctor-prev"
+							onClick={() => this.handlePrev()}
+						>
 							<i className="fas fa-long-arrow-left"></i>
 						</button>
-						<button className="doctor-next" id="doctor-next">
+						<button
+							className="doctor-next"
+							id="doctor-next"
+							onClick={() => this.handleNext()}
+						>
 							<i className="fas fa-long-arrow-right"></i>
 						</button>
 					</div>
@@ -460,4 +600,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(HomePage)
+);

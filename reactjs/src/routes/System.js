@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import UserManage from "../containers/System/UserManage";
-import ManageTelemedicine from "../containers/System/ManageTelemedicine";
-import ManageSpecialty from "../containers/System/ManageSpecialty";
+import ManageDoctor from "../containers/System/Doctor/ManageDoctor";
 
 class System extends Component {
 	render() {
@@ -16,13 +15,10 @@ class System extends Component {
 							path="/system/user-manage"
 							component={UserManage}
 						/>
+						
 						<Route
-							path="/system/manage-telemedicine"
-							component={ManageTelemedicine}
-						/>
-						<Route
-							path="/system/manage-specialty"
-							component={ManageSpecialty}
+							path="/system/manage-doctor"
+							component={ManageDoctor}
 						/>
 						<Route
 							component={() => {

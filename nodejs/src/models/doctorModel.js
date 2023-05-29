@@ -1,10 +1,10 @@
 import db from "../configs/connectDB";
-import { findAllDoctor, findDoctorBySpecialty } from "../database/queries";
+import { findAllDoctor, findDoctorByIdQuery, findDoctorBySpecialty } from "../database/queries";
 
 let getAllDoctorModel = (callback) => {
 	db.query(findAllDoctor, (error, results) => {
 		if (error) {
-			callback(error, null);
+			callback(error);
 		} else {
 			callback(null, results);
 		}
@@ -13,13 +13,14 @@ let getAllDoctorModel = (callback) => {
 
 let getDoctorByKeywordModel = (keyword, specialty, callback) => {
 	let findDoctorByKeyword =
-		"SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId";
-	if (keyword && specialty) {
-		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND user.fullName LIKE '%${keyword}%' AND doctor.specialty = '${specialty}'`;
-	} else if (keyword) {
+		"SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id";
+
+	if (keyword && specialty === "") {
 		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND user.fullName LIKE '%${keyword}%'`;
-	} else if (specialty) {
-		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND doctor.specialty = '${specialty}'`;
+	} else if (specialty && keyword === "") {
+		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND doctor.specialtyId = ${specialty}`;
+	} else if (keyword && specialty) {
+		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND user.fullName LIKE '%${keyword}%' AND doctor.specialtyId = '${specialty}'`;
 	}
 	db.query(findDoctorByKeyword, (error, results) => {
 		if (error) {
@@ -29,8 +30,8 @@ let getDoctorByKeywordModel = (keyword, specialty, callback) => {
 	});
 };
 
-let getDoctorBySpecialtyModel = (specialty, callback) => {
-	db.query(findDoctorBySpecialty, specialty, (error, results) => {
+let getDoctorByIdModel = (id, callback) => {
+	db.query(findDoctorByIdQuery, [id], (error, results) => {
 		if (error) {
 			return callback(error);
 		}
@@ -41,5 +42,5 @@ let getDoctorBySpecialtyModel = (specialty, callback) => {
 module.exports = {
 	getDoctorByKeywordModel,
 	getAllDoctorModel,
-	getDoctorBySpecialtyModel,
+	getDoctorByIdModel,
 };

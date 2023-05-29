@@ -17,8 +17,7 @@ let getAllDoctor = (req, res) => {
 };
 
 let getDoctorByKeyword = (req, res) => {
-	let keyword = req.body.keyword;
-	let specialty = req.body.specialty;
+	let { keyword, specialty } = req.query;
 
 	doctorModel.getDoctorByKeywordModel(
 		keyword,
@@ -39,10 +38,10 @@ let getDoctorByKeyword = (req, res) => {
 	);
 };
 
-let getDoctorBySpecialty = (req, res) => {
-	let specialty = req.body.specialty;
+let getDoctorById = (req, res) => {
+	let id = req.query.id;
 
-	doctorModel.getDoctorBySpecialtyModel(specialty, (error, results) => {
+	doctorModel.getDoctorByIdModel(id, (error, results) => {
 		if (error) {
 			return res.status(500).send({
 				code: 500,
@@ -60,5 +59,5 @@ let getDoctorBySpecialty = (req, res) => {
 module.exports = {
 	getDoctorByKeyword,
 	getAllDoctor,
-    getDoctorBySpecialty
+	getDoctorById,
 };
