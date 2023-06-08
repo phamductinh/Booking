@@ -88,7 +88,6 @@ class HomePage extends Component {
 		} else {
 			filteredResults = "";
 		}
-		console.log("filter", filteredResults);
 		this.setState({
 			arrDoctorFilter: filteredResults,
 		});
@@ -111,7 +110,8 @@ class HomePage extends Component {
 	}
 
 	render() {
-		let { arrSpecialty, isOpenMenu, arrDoctorFilter } = this.state;
+		let { arrSpecialty, isOpenMenu, arrDoctorFilter, arrDoctors } =
+			this.state;
 		const { processLogout, userInfor, isLoggedIn } = this.props;
 		return (
 			<div className="homepage-container">
@@ -325,58 +325,6 @@ class HomePage extends Component {
 					</div>
 				</div>
 
-				{/* <div className="telemedicine-container">
-					<div className="telem-content-up">
-						<div className="telem-title">
-							Bác sĩ từ xa qua Video
-						</div>
-						<button className="telem-btn">Xem thêm</button>
-					</div>
-					<div className="telem-slide-container">
-						<div id="telem-slide">
-							{arrTelems &&
-								arrTelems.length > 0 &&
-								arrTelems.map((item, index) => {
-									let telemImage = new Buffer(
-										item.image,
-										"base64"
-									).toString("binary");
-									return (
-										<div
-											className="telem-slide-item"
-											key={index}
-										>
-											<div className="telem-icon">
-												<i className="fas fa-video"></i>
-											</div>
-											<div
-												className="telem-slide-img"
-												style={{
-													backgroundImage: `url(${telemImage})`,
-												}}
-											></div>
-											<div className="telem-content">
-												{item.name}
-											</div>
-										</div>
-									);
-								})}
-						</div>
-					</div>
-					<div className="telem-buttons">
-						<button
-							className="telem-prev"
-							id="telem-prev"
-							onClick={() => this.handlePrev()}
-						></button>
-						<button
-							className="telem-next"
-							id="telem-next"
-							onClick={() => this.handleNext()}
-						></button>
-					</div>
-				</div> */}
-
 				<div className="outstanding-doctor-container">
 					<div className="doctor-content-up">
 						<div className="doctor-title">
@@ -386,112 +334,44 @@ class HomePage extends Component {
 					</div>
 					<div className="doctor-slide-container">
 						<div id="doctor-slide">
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/nguyen-thi-hoai-an.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Phó Giáo sư, Tiến sĩ, Bác sĩ Nguyễn Thị
-										Hoài An
-									</div>
-									<div>
-										<p>Tai Mũi Họng</p>
-									</div>
-								</div>
-							</div>
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/bshung.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Phó Giáo sư, Tiến sĩ, Bác sĩ cao cấp
-										Nguyễn Duy Hưng
-									</div>
-									<div>
-										<p>Da liễu</p>
-									</div>
-								</div>
-							</div>
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/tran-minh-khuyen.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Bác sĩ Chuyên khoa II Trần Minh Khuyên
-									</div>
-									<div>
-										<p>Sức khỏe tâm thần</p>
-									</div>
-								</div>
-							</div>
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/tuyet-nga.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Bác sĩ Chuyên khoa I Phí Thị Tuyết Nga
-									</div>
-									<div>
-										<p>Sản Phụ khoa</p>
-									</div>
-								</div>
-							</div>
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/le-thi-tuyet-lan.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Phó Giáo sư, Tiến sĩ, Bác sĩ Lê Thị
-										Tuyết Lan
-									</div>
-									<div>
-										<p>Dị ứng miễn dịch</p>
-									</div>
-								</div>
-							</div>
-							<div className="doctor-slide-item">
-								<div
-									className="doctor-img"
-									style={{
-										backgroundImage:
-											"url(./image/doctors/hoai-huong.jpg)",
-									}}
-								></div>
-								<div className="doctor-infor">
-									<div className="doctor-name">
-										Bác sĩ chuyên khoa II Trần Thị Hoài
-										Hương
-									</div>
-									<div>
-										<p>Da liễu</p>
-									</div>
-								</div>
-							</div>
+							{arrDoctors &&
+								arrDoctors.length > 0 &&
+								arrDoctors.map((item, index) => {
+									return (
+										<div
+											className="doctor-slide-item"
+											key={index}
+											onClick={() =>
+												this.handleViewDetail(item)
+											}
+										>
+											<div
+												className="doctor-img"
+												style={{
+													backgroundImage: `url(${
+														arrDoctors &&
+														arrDoctors.image
+															? new Buffer(
+																	arrDoctors.image,
+																	"base64"
+															  ).toString(
+																	"binary"
+															  )
+															: ""
+													})`,
+												}}
+											></div>
+											<div className="doctor-infor">
+												<div className="doctor-name">
+													Bác sĩ {item.name}
+												</div>
+												<div>
+													<p>{item.specialty}</p>
+												</div>
+											</div>
+										</div>
+									);
+								})}
 						</div>
 					</div>
 					<div className="doctor-buttons">

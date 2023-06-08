@@ -11,4 +11,23 @@ const findAllDoctorService = () => {
 	return axios.get("/api/get-all-doctor");
 };
 
-export { findDoctorService, findAllDoctorService ,findDoctorByIdService};
+const handleCreateDoctor = (data) => {
+	return axios.post("/api/create-doctor", data);
+};
+
+const deleteDoctor = (doctorId) => {
+	return axios.delete(`/api/delete-doctor?id=${doctorId}`);
+};
+
+const updateDoctor = (doctorData) => {
+	return axios.put("/api/update-doctor", doctorData);
+};
+
+export {
+	findDoctorService,
+	findAllDoctorService,
+	findDoctorByIdService,
+	deleteDoctor,
+	updateDoctor,
+	handleCreateDoctor,
+};

@@ -49,201 +49,145 @@
 	cursor: pointer;
 }
 
-.detail-doctor-infor {
-	padding: 20px 70px;
+.booking-detail-doctor-infor {
+	padding: 20px 300px;
 	display: flex;
+	background-color: #efeef5;
 }
-.detail-doctor-img {
+.booking-detail-doctor-img {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-	width: 140px;
-	height: 140px;
+	width: 110px;
+	height: 110px;
 	border-radius: 50%;
 	margin-right: 50px;
 }
-.detail-doctor-infors {
-	width: 60%;
-	padding: 20px 0 0 10px;
+.booking-detail-doctor-infors {
+	width: auto;
+	padding: 0;
 }
-.detail-doctor-infors h1 {
-	font-size: 27px;
+.booking-detail-doctor-infors h1 {
+	font-size: 21px;
 	font-weight: bold;
+	color: #45c3d2;
 	margin-bottom: 8px;
 }
-.detail-doctor-infors p {
+.booking-detail-doctor-infors h2 {
+	font-size: 18px;
+	text-transform: uppercase;
+	color: #555;
+	margin-bottom: 8px;
+}
+.booking-detail-doctor-infors p {
 	font-size: 13px;
 	color: #555;
 }
-
-.detail-doctor-schedule {
-	padding: 20px 120px;
-	display: flex;
-}
-.detail-doctor-schedule-left {
-    padding-top: 20px;
-	width: 50%;
-}
-.date-chooser {
-	outline: none;
-	border: none;
-	color: #337ab7;
-	font-weight: bold;
-	font-size: 15px;
-	padding-bottom: 6px;
-	border-bottom: 1px solid #555;
-}
-.detail-doctor-schedule-left h2 {
-	margin: 10px 0 20px 0;
-	color: #333;
-	font-weight: bold;
-}
-.detail-doctor-schedule-left i {
-	padding-right: 8px;
-}
-.available-schedule {
-	position: relative;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 15px;
-}
-.available-schedule a {
-	padding: 10px 10px;
-	background: #fff8ae;
-	color: #333;
-	text-decoration: none;
-	font-weight: bold;
-	cursor: pointer;
-}
-.available-schedule a i {
-	color: #388e3c;
-}
-.available-schedule a:hover {
-	border: 1px solid #45c3d2;
-}
-.choose-and-book p {
-	padding-bottom: 10px;
-	margin-top: 20px;
-	font-size: 12px;
-	color: #333;
-}
-.choose-and-book p i {
-	color: #555;
-}
-.exam-address {
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
-}
-.exam-address h3 {
-	padding: 10px 0 5px 15px;
-	font-size: 15px;
-	font-weight: 600;
-	color: #666;
-}
-.exam-address p {
-	padding-left: 15px;
-}
-.exam-price h3 {
-	border-bottom: 1px solid #efefef;
-	padding: 15px;
-	font-size: 15px;
-	color: #666;
-}
-.exam-price h3 strong {
-	font-weight: 600;
-}
-.exam-price h3 a {
-	padding-left: 10px;
-	font-size: 15px;
-	color: #45c3d2;
-	cursor: pointer;
-	text-decoration: none;
-}
-.insurance h3 {
-	padding: 15px;
-	font-size: 15px;
-	color: #666;
-}
-.insurance h3 strong {
-	font-weight: 600;
-}
-.insurance h3 a {
-	padding-left: 10px;
-	font-size: 15px;
-	color: #45c3d2;
-	cursor: pointer;
-	text-decoration: none;
-}
-.booking-now {
-	width: 200px;
-	height: 60px;
-	margin-top: 20px;
-	border-radius: 8px;
-	background-color: #fff04b;
-	border: none;
-	outline: none;
-}
-.booking-now a {
-	text-decoration: none;
-    text-transform: uppercase;
-	font-size: 18px;
+.price-booking-header {
 	color: red;
-	font-weight: bold;
+	padding-left: 5px;
+	font-size: 15px;
 }
-.booking-now a i {
-	font-size: 20px;
-    margin-left: 6px;
-}
-.detail-doctor-introduction {
+.booking-detail-doctor-container {
 	width: 100%;
+	height: 100%;
+}
+
+.booking-container {
 	height: auto;
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	background-color: #f9f9f9;
-	padding: 20px 80px;
+	width: 750px;
+	margin: 10px auto;
 }
-.detail-doctor-introduction h2 {
-	font-weight: 600;
-	font-size: 14px;
-	padding: 10px 0px;
-}
-.detail-doctor-introduction ul {
-	padding-left: 20px;
-}
-.introduction {
-	width: 1200px;
-	height: auto;
-	margin: 30px auto;
-}
-.bookingcare-role-btn {
-	padding: 6px 12px;
-	border-radius: 4px;
-	text-align: center;
-	cursor: pointer;
+
+.booking-input {
+	margin: 10px 0;
 	width: 100%;
-	height: auto;
+	padding: 10px;
 	border: 1px solid #ccc;
+	border-radius: 3px;
+	display: table;
 }
-.bookingcare-role-btn p {
-	text-decoration: none;
-	color: #45c3d2;
-	text-align: center;
-	margin-bottom: 0;
+.booking-input i {
+	vertical-align: top;
+	display: table-cell;
+	color: #666;
+	width: 1%;
+	padding-right: 10px;
 }
-.hiden-introduction {
-	display: block;
+.booking-input input {
+	width: 100%;
+	display: table-cell;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	padding: 0;
 }
-.hiden-introduction p {
-	font-weight: 600;
-	padding: 10px 0;
+.booking-input:focus {
+	border: 1px solid #1cbfd1;
 }
-.hiden-introduction p span {
+.booking-input select {
+	width: 100%;
+	display: table-cell;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	padding: 0;
+}
+.booking-input textarea {
+	width: 100%;
+	display: table-cell;
+	border: none;
+	outline: none;
+	background-color: #fff;
+	padding: 0;
+}
+.booking-note {
+	font-size: 13px;
+	color: #666;
+	line-height: 1.5;
+}
+.booking-gender {
 	margin: 10px 0;
 }
-.hiden-introduction ul {
-	margin: 0 25px;
+.booking-gender label {
+	color: #333;
+	font-size: 15px;
+	margin-right: 20px;
+}
+.booking-gender label input {
+	margin-right: 5px;
+}
+.booking-total-price {
+	background: #f6f6f6;
+	padding: 15px;
+	border-radius: 5px;
+}
+.booking-total-price div {
+	display: flex;
+	justify-content: space-between;
+	margin: 5px 0;
+}
+.total-price {
+	text-align: right;
+}
+.booking-container p {
+	text-align: center;
+	color: #666;
+	font-size: 13px;
+	padding-top: 5px;
+	margin: 5px 0;
+}
+.btn-booking {
+	padding: 6px 12px;
+	width: 100%;
+	margin: 20px 0;
+	background-color: #ffc419;
+	color: #fff;
+	border-radius: 4px;
+	border: none;
+	outline: none;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 .more-questions {

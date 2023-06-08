@@ -1,5 +1,9 @@
 import db from "../configs/connectDB";
-import { findAllDoctor, findDoctorByIdQuery, findDoctorBySpecialty } from "../database/queries";
+import {
+	findAllDoctor,
+	findDoctorByIdQuery,
+	findDoctorBySpecialty,
+} from "../database/queries";
 
 let getAllDoctorModel = (callback) => {
 	db.query(findAllDoctor, (error, results) => {
@@ -31,11 +35,11 @@ let getDoctorByKeywordModel = (keyword, specialty, callback) => {
 };
 
 let getDoctorByIdModel = (id, callback) => {
-	db.query(findDoctorByIdQuery, [id], (error, results) => {
+	db.query(findDoctorByIdQuery, id, (error, results) => {
 		if (error) {
 			return callback(error);
 		}
-		return callback(null, results);
+		return callback(null, results[0]);
 	});
 };
 

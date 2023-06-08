@@ -22,6 +22,7 @@ import CustomScrollbars from "../components/CustomScrollbars";
 import PrivateRoute from "../routes/PrivateRoute";
 import Doctor from "../routes/Doctor";
 import DetailDoctor from "./System/Doctor/DetailDoctor";
+import Booking from "./System/Doctor/Booking";
 
 class App extends Component {
 	handlePersistorState = () => {
@@ -110,6 +111,10 @@ class App extends Component {
 									<Route
 										path={"/detail-doctor/:id"}
 										component={DetailDoctor}
+									/>
+									<Route
+										path={"/booking/:id"}
+										component={Booking}
 									/>
 								</Switch>
 							</CustomScrollbars>

@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { findDoctorByIdService } from "../../../services/doctorService";
 import { NumericFormat } from "react-number-format";
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router";
-import "./DetailDoctor.css";
+import "./Booking.css";
 
 class DetailDoctor extends Component {
 	constructor(props) {
@@ -36,20 +35,35 @@ class DetailDoctor extends Component {
 		this.props.history.push(`/booking/${id}`);
 	};
 
-	componentDidUpdate(prevProps, prevState, snapshot) {}
+	goBack = () => {
+		this.props.history.push(`/detail-doctor/${this.props.match.params.id}`);
+	};
 
 	render() {
 		console.log(this.props.match.params.id);
 		let { detailDoctor } = this.state;
-		console.log("check", detailDoctor);
+		const hours = [
+			"7:00",
+			"8:00",
+			"9:00",
+			"10:00",
+			"11:00",
+			"13:00",
+			"14:00",
+			"15:00",
+			"16:00",
+			"17:00",
+		];
+		let currentDate = new Date().toISOString().split("T")[0];
 		return (
 			<>
-				<div className="detail-doctor-container">
+				<div className="booking-detail-doctor-container">
 					<div className="detail-doctor-header">
 						<div className="detail-doctor-header-left">
-							<Link to="/home">
-								<i className="fas fa-long-arrow-left"></i>
-							</Link>
+							<i
+								className="fas fa-long-arrow-left"
+								onClick={this.goBack}
+							></i>
 
 							<h2>Bác sĩ {detailDoctor.name}</h2>
 						</div>
@@ -61,10 +75,10 @@ class DetailDoctor extends Component {
 							<i className="fas fa-bars"></i>
 						</div>
 					</div>
-					<div className="detail-doctor-container">
-						<div className="detail-doctor-infor">
+					<div className="booking-detail-doctor-container">
+						<div className="booking-detail-doctor-infor">
 							<div
-								className="detail-doctor-img"
+								className="booking-detail-doctor-img"
 								style={{
 									backgroundImage: `url(${
 										detailDoctor && detailDoctor.image
@@ -76,65 +90,126 @@ class DetailDoctor extends Component {
 									})`,
 								}}
 							></div>
-							<div className="detail-doctor-infors">
+							<div className="booking-detail-doctor-infors">
+								<h2>Đặt lịch khám</h2>
 								<h1>Bác sĩ {detailDoctor.name}</h1>
 								<p>{detailDoctor.introduction}</p>
+								<div>
+									Giá khám:
+									<NumericFormat
+										className="price-booking-header"
+										value={detailDoctor.price}
+										displayType={"text"}
+										thousandSeparator={true}
+										suffix={"VNĐ"}
+									/>
+								</div>
 							</div>
 						</div>
-						<div className="detail-doctor-schedule">
-							<div className="detail-doctor-schedule-left">
-								<h3>Bạn đang gặp vấn đề về sức khỏe ?</h3>
-								<button
-									className="booking-now"
-									onClick={() => this.handleViewBooking()}
-								>
-									<Link to="/booking">
-										Đặt lịch ngay
-										<i className="fa-solid fa-arrow-right"></i>
-									</Link>
-								</button>
-								<div className="choose-and-book">
-									<p>
-										Click{" "}
-										<i className="fas fa-hand-pointer"></i>
-										và đặt lịch (Miễn phí)
-									</p>
+						<div className="booking-container">
+							<form action="">
+								<label htmlFor="">Chọn ngày khám:</label>
+								<div className="booking-input">
+									<i className="fa-solid fa-calendar"></i>
+									<input type="date" min={currentDate} />
 								</div>
-							</div>
-							<div className="detail-doctor-schedule-right">
-								<div className="exam-address">
-									<h3>ĐỊA CHỈ KHÁM</h3>
-									<p>{detailDoctor.clinic}</p>
-									<p>{detailDoctor.address}</p>
+								<label htmlFor="">Chọn giờ khám:</label>
+								<div className="booking-input">
+									<i className="fa-solid fa-clock"></i>
+									<select>
+										{hours.map((hour) => (
+											<option key={hour} value={hour}>
+												{hour}
+											</option>
+										))}
+									</select>
 								</div>
-								<div className="exam-price">
-									<h3>
-										<strong>GIÁ KHÁM:</strong>{" "}
+								<div className="booking-input">
+									<i className="fa-solid fa-user"></i>
+									<input
+										type="text"
+										placeholder="Họ tên bệnh nhân"
+									/>
+								</div>
+								<div className="booking-note">
+									Hãy ghi rõ Họ Và Tên, viết hoa những chữ cái
+									đầu tiên, ví dụ: Phạm Đức Tịnh
+								</div>
+								<div className="booking-gender">
+									<label htmlFor="">
+										<input type="radio" name="gender" />
+										Nam
+									</label>
+									<label htmlFor="">
+										<input type="radio" name="gender" />
+										Nữ
+									</label>
+								</div>
+								<div className="booking-input">
+									<i className="fa-solid fa-phone"></i>
+									<input
+										type="tel"
+										placeholder="Số điện thoại liên hệ"
+									/>
+								</div>
+								<div className="booking-input">
+									<i className="fa-solid fa-calendar"></i>
+									<input
+										type="number"
+										placeholder="Năm sinh"
+									/>
+								</div>
+								<div className="booking-input">
+									<i className="fa-solid fa-location-dot"></i>
+									<input type="text" placeholder="Địa chỉ" />
+								</div>
+								<div className="booking-input">
+									<i className="fa-solid fa-comment"></i>
+									<textarea placeholder="Lý do khám"></textarea>
+								</div>
+								<div className="booking-total-price">
+									<div>
+										<div>Giá khám</div>
 										<NumericFormat
+											className="total-price"
 											value={detailDoctor.price}
 											displayType={"text"}
 											thousandSeparator={true}
 											suffix={"VNĐ"}
 										/>
-									</h3>
+									</div>
+									<div>
+										<div>Phí đặt lịch</div>
+										<div className="total-price">
+											Miễn phí
+										</div>
+									</div>
+									<hr />
+									<div>
+										<div>Tổng cộng</div>
+										<NumericFormat
+											className="price-booking-header"
+											value={detailDoctor.price}
+											displayType={"text"}
+											thousandSeparator={true}
+											suffix={"VNĐ"}
+										/>
+									</div>
 								</div>
-								<div className="insurance">
-									<h3>
-										<strong>LOẠI BẢO HIỂM ÁP DỤNG.</strong>
-									</h3>
-								</div>
-							</div>
+								<p>
+									Quý khách vui lòng điền đầy đủ thông tin để
+									tiết kiệm thời gian làm thủ tục khám
+								</p>
+								<button type="submit" className="btn-booking">
+									Xác nhận đặt khám
+								</button>
+							</form>
 						</div>
-						<div
-							className="detail-doctor-introduction"
-							dangerouslySetInnerHTML={{
-								__html: detailDoctor.description,
-							}}
-						></div>
 
-						<div className="introduction">
+						{/* <div className="introduction">
 							<div
 								className="bookingcare-role-btn"
+								onclick="hiden_introduction()"
 							>
 								<p>Vai trò của BookingCare</p>
 							</div>
@@ -203,7 +278,7 @@ class DetailDoctor extends Component {
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="more-questions">
 							<p>
@@ -304,6 +379,4 @@ const mapDispatchToProps = (dispatch) => {
 	return {};
 };
 
-export default withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(DetailDoctor)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailDoctor);
