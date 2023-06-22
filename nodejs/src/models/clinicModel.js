@@ -1,10 +1,10 @@
 import db from "../configs/connectDB";
-import { findAllClinicsQuery } from "../database/queries";
+import { findAllClinicQuery } from "../database/queries";
 
 let getAllClinicsModel = (callback) => {
-	db.query(findAllClinicsQuery, (error, results) => {
+	db.query(findAllClinicQuery, (error, results) => {
 		if (error) {
-			callback(error, null);
+			callback(error);
 		} else {
 			callback(null, results);
 		}

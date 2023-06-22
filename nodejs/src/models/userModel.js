@@ -13,11 +13,23 @@ import {
 	createAUser,
 	updateUserQuery,
 	deleteUserById,
+	findAllDoctorAccQuery,
 } from "../database/queries";
 import { errMsg } from "../utils/resMsg";
+import emailService from "../services/emailService";
 
 let getAllUsers = (callback) => {
 	db.query(findAllUsers, (error, results) => {
+		if (error) {
+			callback(error, null);
+		} else {
+			callback(null, results);
+		}
+	});
+};
+
+let getAllDoctorAccModel = (callback) => {
+	db.query(findAllDoctorAccQuery, (error, results) => {
 		if (error) {
 			callback(error, null);
 		} else {
@@ -32,6 +44,27 @@ let getUserById = (userId, callback) => {
 			return callback(error);
 		}
 		return callback(null, results[0]);
+	});
+};
+
+let confirmEmailModel = (userData, callback) => {
+	let email = userData.email;
+	console.log(email);
+	if (!email) {
+		let error = new Error(errMsg.missing_input);
+		error.statusCode = 400;
+		return callback(error);
+	}
+	db.query(findByEmail, email, async (err, result) => {
+		if (err) {
+			console.log(err);
+			return callback(err);
+		}
+
+		if (result.length) {
+			await emailService.sendConfirmEmail({ receiverEmail: email });
+			return callback(null, result);
+		}
 	});
 };
 
@@ -104,34 +137,12 @@ let createUser = (userData, callback) => {
 	});
 };
 
-// let updateAUser = (userData, callback) => {
-// 	let values = [
-// 		userData.fullName,
-// 		userData.address,
-// 		userData.gender,
-//         userData.role,
-// 		userData.phoneNumber,
-//         userData.id
-// 	];
-// 	if (!userData.id) {
-// 		let error = new Error("Please provide id!");
-// 		error.statusCode = 400;
-// 		return callback(error);
-// 	}
-// 	if (userData.email || userData.password) {
-// 		let error = new Error("Email and password can't be changed!");
-// 		error.statusCode = 400;
-// 		return callback(error);
-// 	}
-// 	db.query(updateUserQuery, values, callback);
-// };
-
 let updateAUser = (userData, callback) => {
 	let values = [
 		userData.fullName,
 		userData.address,
 		userData.gender,
-        userData.role,
+		userData.role,
 		userData.phoneNumber,
 		userData.id,
 	];
@@ -158,4 +169,6 @@ module.exports = {
 	createUser,
 	updateAUser,
 	deleteAUser,
+	getAllDoctorAccModel,
+	confirmEmailModel,
 };

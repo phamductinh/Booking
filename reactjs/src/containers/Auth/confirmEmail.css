@@ -48,203 +48,118 @@
 	color: #ffffff;
 	cursor: pointer;
 }
-
-.detail-doctor-infor {
-	padding: 20px 70px;
-	display: flex;
-}
-.detail-doctor-img {
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 140px;
-	height: 140px;
-	border-radius: 50%;
-	margin-right: 50px;
-}
-.detail-doctor-infors {
-	width: 60%;
-	padding: 20px 0 0 10px;
-}
-.detail-doctor-infors h1 {
-	font-size: 27px;
-	font-weight: bold;
-	margin-bottom: 8px;
-}
-.detail-doctor-infors p {
-	font-size: 13px;
-	color: #555;
+.booking-detail-doctor-container {
+	height: auto;
 }
 
-.detail-doctor-schedule {
-	padding: 20px 120px;
-	display: flex;
-}
-.detail-doctor-schedule-left {
-    padding-top: 20px;
-	width: 50%;
-}
-.date-chooser {
-	outline: none;
-	border: none;
-	color: #337ab7;
-	font-weight: bold;
-	font-size: 15px;
-	padding-bottom: 6px;
-	border-bottom: 1px solid #555;
-}
-.detail-doctor-schedule-left h2 {
-	margin: 10px 0 20px 0;
-	color: #333;
-	font-weight: bold;
-}
-.detail-doctor-schedule-left i {
-	padding-right: 8px;
-}
-.available-schedule {
-	position: relative;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 15px;
-}
-.available-schedule a {
-	padding: 10px 10px;
-	background: #fff8ae;
-	color: #333;
-	text-decoration: none;
-	font-weight: bold;
-	cursor: pointer;
-}
-.available-schedule a i {
-	color: #388e3c;
-}
-.available-schedule a:hover {
-	border: 1px solid #45c3d2;
-}
-.choose-and-book p {
-	padding-bottom: 10px;
-	margin-top: 20px;
-	font-size: 12px;
-	color: #333;
-}
-.choose-and-book p i {
-	color: #555;
-}
-.exam-address {
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
-}
-.exam-address h3 {
-	padding: 10px 0 5px 15px;
-	font-size: 19px;
-	font-weight: 600;
-	color: #666;
-}
-.exam-address p {
-	padding-left: 15px;
-    font-size: 16;
-}
-.exam-price h3 {
-	border-bottom: 1px solid #efefef;
-	padding: 15px;
-	font-size: 17px;
-	color: #666;
-}
-.exam-price h3 strong {
-	font-weight: 600;
-}
-.exam-price h3 a {
-	padding-left: 10px;
-	font-size: 15px;
-	color: #45c3d2;
-	cursor: pointer;
-	text-decoration: none;
-}
-.insurance h3 {
-	padding: 15px;
-	font-size: 15px;
-	color: #666;
-}
-.insurance h3 strong {
-	font-weight: 600;
-}
-.insurance h3 a {
-	padding-left: 10px;
-	font-size: 15px;
-	color: #45c3d2;
-	cursor: pointer;
-	text-decoration: none;
-}
-.booking-now {
-	width: 200px;
-	height: 60px;
-	margin-top: 20px;
-	border-radius: 8px;
-	background-color: #fff04b;
-	border: none;
-	outline: none;
-}
-.booking-now a {
-	text-decoration: none;
-    text-transform: uppercase;
-	font-size: 18px;
-	color: red;
-	font-weight: bold;
-}
-.booking-now a i {
-	font-size: 20px;
-    margin-left: 6px;
-}
-.detail-doctor-introduction {
-	width: 100%;
-	height: auto;
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	background-color: #f9f9f9;
-	padding: 20px 80px;
-}
-.detail-doctor-introduction h2 {
-	font-weight: 600;
+.form-container-email {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	max-width: 600px;
+	width: 500px;
+	height: 400px;
+	background-color: #fff;
+	padding: 32px 24px;
 	font-size: 14px;
-	padding: 10px 0px;
+	font-family: inherit;
+	color: #212121;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	box-sizing: border-box;
+	border-radius: 10px;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084),
+		0px 2px 3px rgba(0, 0, 0, 0.168);
 }
-.detail-doctor-introduction ul {
-	padding-left: 20px;
+
+.form-group-email {
+	margin: 20px 0;
 }
-.introduction {
-	width: 1200px;
-	height: auto;
-	margin: 30px auto;
+
+.form-container-email button:active {
+	scale: 0.95;
 }
-.bookingcare-role-btn {
-	padding: 6px 12px;
-	border-radius: 4px;
+
+.form-container-email .logo-container-email {
 	text-align: center;
-	cursor: pointer;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.form-container-email .form-email {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-container-email .form-group-email {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.form-container-email .form-group-email label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.form-container-email .form-group-email input {
 	width: 100%;
-	height: auto;
+	padding: 12px 16px;
+	border-radius: 6px;
+	font-family: inherit;
 	border: 1px solid #ccc;
 }
-.bookingcare-role-btn p {
+
+.form-container-email .form-group-email input::placeholder {
+	opacity: 0.5;
+}
+
+.form-container-email .form-group-email input:focus {
+	outline: none;
+	border-color: #1778f2;
+}
+
+.form-container-email .form-submit-btn-email {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: inherit;
+	color: #fff;
+	background-color: #212121;
+	border: none;
+	width: 100%;
+	padding: 12px 16px;
+	font-size: inherit;
+	gap: 8px;
+	margin: 20px 0;
+	cursor: pointer;
+	border-radius: 6px;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084),
+		0px 2px 3px rgba(0, 0, 0, 0.168);
+}
+
+.form-container-email .form-submit-btn-email:hover {
+	background-color: #313131;
+}
+
+.form-container-email .link {
+	color: #1778f2;
 	text-decoration: none;
-	color: #45c3d2;
-	text-align: center;
-	margin-bottom: 0;
 }
-.hiden-introduction {
-	display: block;
+
+.form-container-email .signup-link {
+	align-self: center;
+	font-weight: 500;
 }
-.hiden-introduction p {
-	font-weight: 600;
-	padding: 10px 0;
+
+.form-container-email .signup-link .link {
+	font-weight: 400;
 }
-.hiden-introduction p span {
-	margin: 10px 0;
-}
-.hiden-introduction ul {
-	margin: 0 25px;
+
+.form-container-email .link:hover {
+	text-decoration: underline;
 }
 
 .more-questions {
@@ -357,6 +272,9 @@
 }
 
 .footer2 {
+	position: fixed;
+	left: 0;
+	bottom: 0;
 	width: 100%;
 	height: 60px;
 	display: flex;

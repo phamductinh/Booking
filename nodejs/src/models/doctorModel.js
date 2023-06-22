@@ -2,7 +2,7 @@ import db from "../configs/connectDB";
 import {
 	findAllDoctor,
 	findDoctorByIdQuery,
-	findDoctorBySpecialty,
+	createADoctorQuery,
 } from "../database/queries";
 
 let getAllDoctorModel = (callback) => {
@@ -17,14 +17,12 @@ let getAllDoctorModel = (callback) => {
 
 let getDoctorByKeywordModel = (keyword, specialty, callback) => {
 	let findDoctorByKeyword =
-		"SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id";
+		"SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id";
 
-	if (keyword && specialty === "") {
-		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND user.fullName LIKE '%${keyword}%'`;
-	} else if (specialty && keyword === "") {
-		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND doctor.specialtyId = ${specialty}`;
-	} else if (keyword && specialty) {
+	if (keyword && specialty) {
 		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND user.fullName LIKE '%${keyword}%' AND doctor.specialtyId = '${specialty}'`;
+	} else {
+		findDoctorByKeyword += ` WHERE user.role = "Doctor" AND (user.fullName LIKE '%${keyword}%' OR doctor.specialtyId = '${specialty}')`;
 	}
 	db.query(findDoctorByKeyword, (error, results) => {
 		if (error) {
@@ -43,8 +41,40 @@ let getDoctorByIdModel = (id, callback) => {
 	});
 };
 
+let createDoctorModel = (doctorData, callback) => {
+	let {
+		userId,
+		introduction,
+		clinicId,
+		specialtyId,
+		description,
+		price,
+		image,
+	} = doctorData;
+
+	db.query(
+		createADoctorQuery,
+		[
+			userId,
+			introduction,
+			description,
+			specialtyId,
+			price,
+			image,
+			clinicId,
+		],
+		(err, results) => {
+			if (err) {
+				return callback(err);
+			}
+			callback(null, results);
+		}
+	);
+};
+
 module.exports = {
 	getDoctorByKeywordModel,
 	getAllDoctorModel,
 	getDoctorByIdModel,
+	createDoctorModel,
 };

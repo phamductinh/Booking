@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import UserManage from "../containers/System/UserManage";
 import ManageDoctor from "../containers/System/Doctor/ManageDoctor";
+import ManageBooking from "../containers/System/Doctor/ManageBooking";
 
 class System extends Component {
 	render() {
@@ -15,10 +16,14 @@ class System extends Component {
 							path="/system/user-manage"
 							component={UserManage}
 						/>
-						
+
 						<Route
 							path="/system/manage-doctor"
 							component={ManageDoctor}
+						/>
+						<Route
+							path="/system/manage-booking"
+							component={ManageBooking}
 						/>
 						<Route
 							component={() => {

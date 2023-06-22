@@ -3,6 +3,7 @@ import doctorModel from "../models/doctorModel";
 let getAllDoctor = (req, res) => {
 	doctorModel.getAllDoctorModel((error, results) => {
 		if (error) {
+            console.log(error)
 			return res.status(500).send({
 				code: 500,
 				msg: "Có gì đó sai sai!",
@@ -56,8 +57,26 @@ let getDoctorById = (req, res) => {
 	});
 };
 
+let createADoctor = (req, res) => {
+	let doctorData = req.body;
+	doctorModel.createDoctorModel(doctorData, (err, results) => {
+		if (err) {
+			console.log(err);
+			return res.status(400).send({
+				code: 400,
+				msg: "Something wrong!",
+			});
+		}
+		return res.status(200).send({
+			code: 200,
+			msg: "Create doctor successfully!",
+		});
+	});
+};
+
 module.exports = {
 	getDoctorByKeyword,
 	getAllDoctor,
 	getDoctorById,
+	createADoctor,
 };

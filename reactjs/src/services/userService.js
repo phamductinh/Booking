@@ -11,8 +11,16 @@ const handleCreateUser = (data) => {
 	return axios.post("/api/create-user", data);
 };
 
+const handleConfirmEmail = (data) => {
+	return axios.get("/api/confirm-email", data);
+};
+
 const getAllUsers = () => {
 	return axios.get("/api/users");
+};
+
+const getDoctorAcc = () => {
+	return axios.get("/api/get-doctor-acc");
 };
 
 const deleteUser = (userId) => {
@@ -23,4 +31,12 @@ const editUser = (userData) => {
 	return axios.put("/api/edit-user", userData);
 };
 
-export { handleLoginAPI, handleCreateUser, getAllUsers, deleteUser, editUser };
+export {
+	handleLoginAPI,
+	handleCreateUser,
+	getAllUsers,
+	deleteUser,
+	editUser,
+	getDoctorAcc,
+    handleConfirmEmail
+};

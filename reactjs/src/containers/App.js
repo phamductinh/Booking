@@ -23,6 +23,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import Doctor from "../routes/Doctor";
 import DetailDoctor from "./System/Doctor/DetailDoctor";
 import Booking from "./System/Doctor/Booking";
+import confirmEmail from "./Auth/confirmEmail";
 
 class App extends Component {
 	handlePersistorState = () => {
@@ -115,6 +116,10 @@ class App extends Component {
 									<Route
 										path={"/booking/:id"}
 										component={Booking}
+									/>
+									<Route
+										path={"/confirm-email"}
+										component={confirmEmail}
 									/>
 								</Switch>
 							</CustomScrollbars>

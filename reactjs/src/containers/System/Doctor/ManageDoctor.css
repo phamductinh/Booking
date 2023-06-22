@@ -115,6 +115,18 @@
 	display: flex;
 }
 
+#doctor-select {
+	height: 35px;
+	width: 100%;
+	margin: 10px 0;
+	padding-left: 8px;
+	outline: none;
+	color: rgb(17, 17, 17);
+	background: #fff;
+	border: 1px solid rgb(141, 141, 141);
+	border-radius: 4px;
+}
+
 #clinic-select {
 	height: 35px;
 	width: 50%;

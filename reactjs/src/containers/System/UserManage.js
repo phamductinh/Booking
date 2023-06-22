@@ -308,7 +308,7 @@ class UserManage extends Component {
 
 					{setModalIsOpen ? (
 						<div id="add-new-modal" className="modal">
-							<div className="modal-content">
+							<div className="modal-content-user">
 								<p>Thêm mới người dùng</p>
 								<input
 									className="email"
@@ -457,7 +457,7 @@ class UserManage extends Component {
 
 					{setModalEditUser ? (
 						<div id="add-new-modal" className="modal">
-							<div className="modal-content">
+							<div className="modal-content-user">
 								<p>Edit user</p>
 								<input
 									className="email"

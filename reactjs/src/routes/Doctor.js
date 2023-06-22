@@ -9,7 +9,7 @@ class Doctor extends Component {
 				<div className="system-list">
 					<Switch>
 						<Route
-							path="/doctor/manage-booking"
+							path="/system/manage-booking"
 							component={ManageBooking}
 						/>
 					</Switch>

@@ -25,6 +25,7 @@
 		"jsonwebtoken": "^9.0.0",
 		"mysql": "^2.18.1",
 		"mysql2": "^2.2.5",
+		"nodemailer": "^6.6.3",
 		"uuid": "^9.0.0",
 		"validator": "^13.9.0"
 	},

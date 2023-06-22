@@ -2,6 +2,8 @@ let findAllUsers = `SELECT * FROM user`;
 
 let findUserById = `SELECT * FROM user WHERE id = ?`;
 
+let findAllDoctorAccQuery = `SELECT * FROM user WHERE role = 'Doctor'`;
+
 let findByEmail = `SELECT * FROM user WHERE LOWER(email) = LOWER(?)`;
 
 let createAUser = `INSERT INTO user (email, password, fullName, address, gender, role, phoneNumber) VALUES (?,?,?,?,?,?,?)`;
@@ -9,18 +11,6 @@ let createAUser = `INSERT INTO user (email, password, fullName, address, gender,
 let updateUserQuery = `UPDATE user SET fullName = ?, address = ?, gender = ?, role = ?, phoneNumber = ? WHERE id = ?`;
 
 let deleteUserById = `DELETE FROM user WHERE id = ?`;
-
-//Telemedicine
-let findAllTelemedicine = "SELECT * FROM telemedicine";
-
-let findTelemedicineById = `SELECT * FROM telemedicine WHERE id = ?`;
-
-let createTelemedicineQuery = `INSERT INTO telemedicine (name, description, descriptionHTML, image) VALUES (?,?,?,?)`;
-
-let updateTelemedicineQuery =
-	"UPDATE telemedicine SET name = ?, description = ?, descriptionHTML = ?, image = ? WHERE id = ?";
-
-let deleteTelemedicineById = `DELETE FROM telemedicine WHERE id = ?`;
 
 //Specialty
 let findAllSpecialtyQuery = "SELECT * FROM specialty";
@@ -32,29 +22,51 @@ let updateSpecialtyQuery =
 
 let deleteSpecialtyById = `DELETE FROM specialty WHERE id = ?`;
 
-let findAllDoctor = `SELECT user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor"`;
+let findAllClinicQuery = "SELECT * FROM clinic";
 
-let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty, doctor.province, doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialtyId = ?`;
+let findAllDoctor = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id as doctorId, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor"`;
 
-let findDoctorByIdQuery = `SELECT user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.province, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor" AND doctor.id = ?`;
+let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty,  doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialtyId = ?`;
+
+let findDoctorByIdQuery = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image, clinic.name as clinicName FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id JOIN clinic ON doctor.clinicId = clinic.id WHERE user.role = "Doctor" AND doctor.id = ?`;
+
+let createADoctorQuery = `INSERT INTO doctor (userId, introduction, description, specialtyId,  price, image, clinicId) VALUES (?,?,?,?,?,?,?)`;
+
+let findBookedAppointmentQuery =
+	"SELECT * from booking WHERE booking_date = ? AND booking_time = ?";
+
+let bookingAnAppointmentQuery = `INSERT INTO booking (userId, doctorId, booking_date, booking_time,fullName, gender, phoneNumber, birthday, address, reason, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
+
+let getBookingByDateQuery = `SELECT booking.*, user.email as patientEmail
+FROM booking 
+JOIN user ON user.id = booking.userId
+JOIN doctor ON doctor.id = booking.doctorId
+WHERE status = 'Pending' AND booking_date = ?`;
+
+let confirmBookingQuery = `UPDATE booking SET status = 'Confirmed' WHERE id = ?`;
+
+let deleteBookingById = `DELETE FROM booking WHERE id = ?`;
 
 module.exports = {
+	findBookedAppointmentQuery,
+	bookingAnAppointmentQuery,
+	getBookingByDateQuery,
+	confirmBookingQuery,
+	deleteBookingById,
 	findAllUsers,
 	findUserById,
 	findByEmail,
 	createAUser,
 	updateUserQuery,
 	deleteUserById,
-	createTelemedicineQuery,
-	findAllTelemedicine,
 	findAllSpecialtyQuery,
 	createNewSpecialtyQuery,
 	deleteSpecialtyById,
-	deleteTelemedicineById,
-	updateTelemedicineQuery,
 	updateSpecialtyQuery,
-	findTelemedicineById,
 	findAllDoctor,
 	findDoctorBySpecialty,
 	findDoctorByIdQuery,
+	createADoctorQuery,
+	findAllDoctorAccQuery,
+	findAllClinicQuery,
 };

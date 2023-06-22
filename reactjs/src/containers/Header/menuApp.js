@@ -19,7 +19,7 @@ export const adminMenu = [
 		menus: [
 			{
 				name: "menu.doctor.manage-booking",
-				link: "/doctor/manage-booking",
+				link: "/system/manage-booking",
 			},
 		],
 	},
@@ -30,12 +30,8 @@ export const doctorMenu = [
 		name: "menu.doctor.doctor",
 		menus: [
 			{
-				name: "menu.doctor.manage-doctor-infor",
-				link: "/doctor/manage-doctor-infor",
-			},
-			{
 				name: "menu.doctor.manage-booking",
-				link: "/doctor/manage-booking",
+				link: "/system/manage-booking",
 			},
 		],
 	},

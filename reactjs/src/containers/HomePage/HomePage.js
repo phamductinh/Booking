@@ -43,7 +43,6 @@ class HomePage extends Component {
 				arrDoctors: res.data,
 			});
 		}
-		console.log(this.state.arrDoctors);
 	};
 
 	handleOpenMenu() {
@@ -51,6 +50,25 @@ class HomePage extends Component {
 			isOpenMenu: !prevState.isOpenMenu,
 		}));
 	}
+
+	handleOnchangeInput = async (event) => {
+		let keyword = event.target.value;
+		let arrDoctors = this.state.arrDoctors;
+		const fuse = new Fuse(arrDoctors, {
+			keys: ["fullName"],
+		});
+		let doctorResults;
+		if (keyword) {
+			doctorResults = fuse
+				.search({ fullName: keyword })
+				.map((result) => result.item);
+		} else {
+			doctorResults = "";
+		}
+		this.setState({
+			doctorResults: doctorResults,
+		});
+	};
 
 	handleOnchangeKeyword = async (event) => {
 		await this.setState({
@@ -110,8 +128,13 @@ class HomePage extends Component {
 	}
 
 	render() {
-		let { arrSpecialty, isOpenMenu, arrDoctorFilter, arrDoctors } =
-			this.state;
+		let {
+			arrSpecialty,
+			isOpenMenu,
+			arrDoctorFilter,
+			arrDoctors,
+			doctorResults,
+		} = this.state;
 		const { processLogout, userInfor, isLoggedIn } = this.props;
 		return (
 			<div className="homepage-container">
@@ -227,8 +250,28 @@ class HomePage extends Component {
 									<input
 										type="search"
 										placeholder="Tìm bác sĩ"
+										onChange={(event) =>
+											this.handleOnchangeInput(event)
+										}
 									/>
 									<i className="fas fa-search"></i>
+									<ul className="doctor-result">
+										{doctorResults
+											? doctorResults.map((item) => (
+													<li
+														className="doctor-result-li"
+														key={item.id}
+														onClick={() =>
+															this.handleViewDetail(
+																item
+															)
+														}
+													>
+														{item.fullName}
+													</li>
+											  ))
+											: ""}
+									</ul>
 								</div>
 								<div className="download">
 									<div className="android"></div>
@@ -327,9 +370,7 @@ class HomePage extends Component {
 
 				<div className="outstanding-doctor-container">
 					<div className="doctor-content-up">
-						<div className="doctor-title">
-							Bác sĩ nổi bật tuần qua
-						</div>
+						<div className="doctor-title">Danh sách bác sĩ</div>
 						<button className="doctor-btn">Xem thêm</button>
 					</div>
 					<div className="doctor-slide-container">
@@ -349,24 +390,23 @@ class HomePage extends Component {
 												className="doctor-img"
 												style={{
 													backgroundImage: `url(${
-														arrDoctors &&
-														arrDoctors.image
+														item.image
 															? new Buffer(
-																	arrDoctors.image,
+																	item.image,
 																	"base64"
 															  ).toString(
 																	"binary"
 															  )
-															: ""
+															: "https://ihfeducation.ihf.info/images/no_avatar.gif"
 													})`,
 												}}
 											></div>
 											<div className="doctor-infor">
 												<div className="doctor-name">
-													Bác sĩ {item.name}
+													Bác sĩ {item.fullName}
 												</div>
 												<div>
-													<p>{item.specialty}</p>
+													<p>{item.specialtyName}</p>
 												</div>
 											</div>
 										</div>

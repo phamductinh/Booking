@@ -36,12 +36,8 @@ class DetailDoctor extends Component {
 		this.props.history.push(`/booking/${id}`);
 	};
 
-	componentDidUpdate(prevProps, prevState, snapshot) {}
-
 	render() {
-		console.log(this.props.match.params.id);
 		let { detailDoctor } = this.state;
-		console.log("check", detailDoctor);
 		return (
 			<>
 				<div className="detail-doctor-container">
@@ -51,7 +47,7 @@ class DetailDoctor extends Component {
 								<i className="fas fa-long-arrow-left"></i>
 							</Link>
 
-							<h2>Bác sĩ {detailDoctor.name}</h2>
+							<h2>Bác sĩ {detailDoctor.fullName}</h2>
 						</div>
 						<div className="detail-doctor-header-right">
 							<div className="detail-doctor-header-support">
@@ -77,7 +73,7 @@ class DetailDoctor extends Component {
 								}}
 							></div>
 							<div className="detail-doctor-infors">
-								<h1>Bác sĩ {detailDoctor.name}</h1>
+								<h1>Bác sĩ {detailDoctor.fullName}</h1>
 								<p>{detailDoctor.introduction}</p>
 							</div>
 						</div>
@@ -104,7 +100,7 @@ class DetailDoctor extends Component {
 							<div className="detail-doctor-schedule-right">
 								<div className="exam-address">
 									<h3>ĐỊA CHỈ KHÁM</h3>
-									<p>{detailDoctor.clinic}</p>
+									<p>{detailDoctor.clinicName}</p>
 									<p>{detailDoctor.address}</p>
 								</div>
 								<div className="exam-price">
@@ -118,11 +114,6 @@ class DetailDoctor extends Component {
 										/>
 									</h3>
 								</div>
-								<div className="insurance">
-									<h3>
-										<strong>LOẠI BẢO HIỂM ÁP DỤNG.</strong>
-									</h3>
-								</div>
 							</div>
 						</div>
 						<div
@@ -132,10 +123,8 @@ class DetailDoctor extends Component {
 							}}
 						></div>
 
-						<div className="introduction">
-							<div
-								className="bookingcare-role-btn"
-							>
+						{/* <div className="introduction">
+							<div className="bookingcare-role-btn">
 								<p>Vai trò của BookingCare</p>
 							</div>
 							<div
@@ -203,7 +192,7 @@ class DetailDoctor extends Component {
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="more-questions">
 							<p>

@@ -18,6 +18,7 @@ import { CommonUtils } from "../../../utils";
 import MdEditor from "react-markdown-editor-lite";
 import MarkdownIt from "markdown-it";
 import "react-markdown-editor-lite/lib/index.css";
+import { getDoctorAcc } from "../../../services/userService";
 const mdParser = new MarkdownIt();
 
 class ManageDoctor extends Component {
@@ -27,6 +28,7 @@ class ManageDoctor extends Component {
 			arrDoctors: [],
 			arrClinics: [],
 			arrSpecialty: [],
+			arrDoctorAcc: [],
 			id: "",
 			name: "",
 			address: "",
@@ -40,11 +42,25 @@ class ManageDoctor extends Component {
 	}
 
 	async componentDidMount() {
-		await this.getAllDoctorsReact();
 		await this.getAllClinicsReact();
 		await this.getAllSpecialtyReact();
+		await this.getAllDoctorAcc();
+		await this.getAllDoctorsReact();
 	}
 
+	getAllDoctorAcc = async () => {
+		this.setState({
+			isLoading: true,
+		});
+		let res = await getDoctorAcc();
+		console.log(res);
+		if (res && res.code === 200) {
+			this.setState({
+				arrDoctorAcc: res.data,
+				isLoading: false,
+			});
+		}
+	};
 	getAllDoctorsReact = async () => {
 		this.setState({
 			isLoading: true,
@@ -124,7 +140,6 @@ class ManageDoctor extends Component {
 		await this.setState({
 			...copyState,
 		});
-		console.log("check state", this.state);
 	};
 
 	handleEditorChange = async ({ html, text }) => {
@@ -146,14 +161,13 @@ class ManageDoctor extends Component {
 
 	handleAddNewDoctor = async () => {
 		let newDoctorData = {
-			name: this.state.name,
+			userId: this.state.userId,
 			introduction: this.state.introduction,
-			clinicId: this.state.clinic,
-			specialtyId: this.state.specialty,
 			description: this.state.descriptionHTML,
-			address: this.state.address,
+			specialtyId: this.state.specialty,
 			price: this.state.price,
 			image: this.state.imageBase64,
+			clinicId: this.state.clinic,
 		};
 		console.log("data", newDoctorData);
 		try {
@@ -166,14 +180,13 @@ class ManageDoctor extends Component {
 			console.log("check response", response);
 			toast.success("Add doctor successfully !");
 			this.setState({
-				name: "",
+				userId: "",
 				introduction: "",
 				clinicId: "",
 				specialtyId: "",
-				description: "",
-				address: "",
+				descriptionHTML: "",
 				price: "",
-				image: "",
+				imageBase64: "",
 				setModalIsOpen: false,
 				isLoading: false,
 			});
@@ -204,32 +217,6 @@ class ManageDoctor extends Component {
 		}
 	};
 
-	handleEditUser = async () => {
-		try {
-			let userData = {
-				fullName: this.state.fullName,
-				address: this.state.address,
-				gender: this.state.gender,
-				role: this.state.role,
-				phoneNumber: this.state.phoneNumber,
-				id: this.state.userId,
-			};
-
-			let token = localStorage.getItem("token");
-			let res = await updateDoctor(token, userData);
-			if (res && res.code === 200) {
-				this.setState({
-					setModalEditUser: false,
-				});
-				await this.getAllUsersReact();
-				toast.success("Update successfully !");
-			}
-		} catch (error) {
-			console.log(error);
-			toast.error("Something wrong !");
-		}
-	};
-
 	handleConfirmDelete = (user) => {
 		this.setState({
 			confirmDelete: true,
@@ -248,23 +235,24 @@ class ManageDoctor extends Component {
 			arrDoctors,
 			arrClinics,
 			arrSpecialty,
+			arrDoctorAcc,
 			setModalIsOpen,
 			setModalEditUser,
 			isLoading,
 			confirmDelete,
 		} = this.state;
-		console.log(arrClinics);
+		console.log("check doctor", arrDoctors);
 		return (
 			<>
 				{this.props.isLoggedIn && <Header />}
 				<div className="user-container">
-					<div className="title text-center">Manage Doctors</div>
+					<div className="title text-center">Quản lý bác sĩ</div>
 					<div className="mx-3">
 						<button
 							className="btn btn-primary px-3"
 							onClick={() => this.handleOpenModal()}
 						>
-							Add new doctor
+							Thêm mới bác sĩ
 						</button>
 					</div>
 					<div className="users-table mt-3 mx-3">
@@ -315,7 +303,7 @@ class ManageDoctor extends Component {
 													}}
 												></div>
 											</td>
-											<td>{item.name}</td>
+											<td>{item.fullName}</td>
 											<td>{item.introduction}</td>
 											<td>{item.address}</td>
 											<td>{item.price}</td>
@@ -350,19 +338,29 @@ class ManageDoctor extends Component {
 					{setModalIsOpen ? (
 						<div id="add-new-modal" className="modal">
 							<div className="modal-content">
-								<p>Add new doctor</p>
-								<input
-									className="name"
-									type="text"
-									placeholder="Name"
-									value={this.state.name}
+								<p>Thêm mới bác sĩ</p>
+								<select
+									name="doctor"
+									id="doctor-select"
+									value={this.state.userId}
 									onChange={(event) =>
 										this.handleOnchangeModalInput(
 											event,
-											"name"
+											"userId"
 										)
 									}
-								/>
+								>
+									<option value="" disabled>
+										Doctor
+									</option>
+									{arrDoctorAcc &&
+										arrDoctorAcc.length > 0 &&
+										arrDoctorAcc.map((item, index) => (
+											<option key={index} value={item.id}>
+												{item.fullName}
+											</option>
+										))}
+								</select>
 								<textarea
 									name="introduction"
 									id="introduction"
@@ -378,19 +376,6 @@ class ManageDoctor extends Component {
 									}
 								></textarea>
 
-								<input
-									className="address"
-									name="address"
-									type="text"
-									placeholder="Address"
-									value={this.state.address}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"address"
-										)
-									}
-								/>
 								<div className="price-field">
 									<input
 										className="price"
@@ -509,7 +494,7 @@ class ManageDoctor extends Component {
 					{setModalEditUser ? (
 						<div id="add-new-modal" className="modal">
 							<div className="modal-content">
-								<p>Edit user</p>
+								<p>Sửa thông tin bác sĩ</p>
 								<input
 									className="email"
 									type="email"
@@ -647,7 +632,7 @@ class ManageDoctor extends Component {
 					{confirmDelete ? (
 						<div className="confirm-delete">
 							<div className="confirmation-text">
-								Are you sure ?
+								Bạn có chắc chắn muốn xóa không?
 							</div>
 							<div className="button-container">
 								<button
@@ -656,13 +641,13 @@ class ManageDoctor extends Component {
 										this.handleCloseConfirmDelete()
 									}
 								>
-									Cancel
+									Hủy
 								</button>
 								<button
 									className="confirmation-button"
 									onClick={() => this.handleDeleteUser()}
 								>
-									Delete
+									Xóa
 								</button>
 							</div>
 						</div>

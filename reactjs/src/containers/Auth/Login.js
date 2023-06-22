@@ -119,7 +119,7 @@ class Login extends Component {
 							<div className="errMsg" style={{ color: "red" }}>
 								{this.state.errMsg}
 							</div>
-							<Link to="/" className="forgot-pass">
+							<Link to="/confirm-email" className="forgot-pass">
 								Quên mật khẩu ?
 							</Link>
 							<div>
@@ -132,162 +132,12 @@ class Login extends Component {
 								</button>
 							</div>
 							<p className="not-member">
-								Chưa có tài khoản ?<Link to="/sign-up">Đăng kí</Link>
+								Chưa có tài khoản ?
+								<Link to="/sign-up">Đăng kí</Link>
 							</p>
 						</form>
 					</div>
 				</div>
-
-				{/* {setModalIsOpen ? (
-					<div id="add-new-modal" className="modal">
-						<div className="modal-content">
-							<p>Create user</p>
-							<input
-								className="email"
-								type="email"
-								placeholder="Email"
-								value={this.state.newEmail}
-								onChange={(event) =>
-									this.handleOnchangeModalInput(
-										event,
-										"newEmail"
-									)
-								}
-							/>
-							<div className="pass-field">
-								<input
-									className="password"
-									type="password"
-									autoComplete="off"
-									placeholder="Password"
-									value={this.state.newPassword}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"newPassword"
-										)
-									}
-								/>
-								<input
-									className="confirm-password"
-									type="password"
-									autoComplete="off"
-									placeholder="Confirm Password"
-									value={this.state.confirmPass}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"confirmPass"
-										)
-									}
-								/>
-							</div>
-							<input
-								className="fullname"
-								name="fullName"
-								type="text"
-								placeholder="Fullname"
-								value={this.state.fullName}
-								onChange={(event) =>
-									this.handleOnchangeModalInput(
-										event,
-										"fullName"
-									)
-								}
-							/>
-							<input
-								className="address"
-								name="address"
-								type="text"
-								placeholder="Address"
-								value={this.state.address}
-								onChange={(event) =>
-									this.handleOnchangeModalInput(
-										event,
-										"address"
-									)
-								}
-							/>
-
-							<div className="modal-select">
-								<input
-									className="phoneNumber"
-									type="tel"
-									placeholder="Phone"
-									value={this.state.phoneNumber}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"phoneNumber"
-										)
-									}
-								/>
-								<select
-									name="gender"
-									id="gender-select"
-									value={this.state.gender}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"gender"
-										)
-									}
-								>
-									<option value="" disabled>
-										Gender
-									</option>
-									<option value="male">Male</option>
-									<option value="female">Female</option>
-									<option value="other">Other</option>
-								</select>
-
-								{isShowRole ? (
-									<select
-										name="role"
-										id="role-select"
-										value={this.state.role}
-										onChange={(event) =>
-											this.handleOnchangeModalInput(
-												event,
-												"role"
-											)
-										}
-									>
-										<option value="" disabled>
-											Role
-										</option>
-										<option value="admin">Admin</option>
-										<option value="doctor">Doctor</option>
-										<option value="user">User</option>
-									</select>
-								) : null}
-							</div>
-							<div
-								className="errMsgSignUp"
-								style={{ color: "red" }}
-							>
-								{this.state.errMsgSignUp}
-							</div>
-
-							<div className="modal-btn">
-								<button
-									className="btn-add-new"
-									type="button"
-									onClick={() => this.handleAddNewUser()}
-								>
-									Add
-								</button>
-								<button
-									className="btn-cancel"
-									type="button"
-									onClick={() => this.handleCloseModal()}
-								>
-									Cancel
-								</button>
-							</div>
-						</div>
-					</div>
-				) : null} */}
 			</>
 		);
 	}
