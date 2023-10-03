@@ -23,6 +23,7 @@ class DetailDoctor extends Component {
 		) {
 			let id = this.props.match.params.id;
 			let res = await findDoctorByIdService(id);
+            console.log(res)
 			if (res && res.code === 200) {
 				this.setState({
 					detailDoctor: res.data,

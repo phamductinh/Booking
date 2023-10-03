@@ -27,7 +27,7 @@ let bookingAnAppointment = (req, res) => {
 			console.log(err);
 			return res.status(500).send({
 				code: 500,
-				msg: "Bác sĩ không rảnh vào thời gian này. Vui lòng chọn khoảng thời gian khác!",
+				msg: "Có gì đó sai sai!",
 			});
 		}
 		return res.status(200).send({

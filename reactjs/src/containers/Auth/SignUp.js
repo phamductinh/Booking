@@ -23,10 +23,10 @@ class SignUp extends Component {
 		};
 	}
 
-	handleOnchangeInput = (event, id) => {
+	handleOnchangeInput = async (event, id) => {
 		let copyState = { ...this.state };
 		copyState[id] = event.target.value;
-		this.setState({
+		await this.setState({
 			...copyState,
 		});
 		console.log("check state", this.state);

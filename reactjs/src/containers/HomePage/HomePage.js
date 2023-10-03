@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getALLSpecialty } from "../../services/specialtyService";
-import { findAllDoctorService } from "../../services/doctorService";
+import {
+	findAllDoctorService,
+	getDoctorByKeyword,
+} from "../../services/doctorService";
 import * as actions from "../../store/actions/";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
@@ -78,41 +81,22 @@ class HomePage extends Component {
 
 	handleOnchangeSelect = async (event) => {
 		await this.setState({
-			specialty: event.target.value,
+			specialtyId: event.target.value,
 		});
 	};
 
-	filterDoctors() {
-		let arrDoctors = this.state.arrDoctors;
-		let { keyword, specialty } = this.state;
-		let filteredResults;
-		const fuse = new Fuse(arrDoctors, {
-			keys: ["fullName", "specialtyId"],
-		});
-		if (keyword && specialty) {
-			filteredResults = fuse
-				.search({
-					$and: [{ fullName: keyword }, { specialtyId: specialty }],
-				})
-				.map((result) => result.item);
-		} else if (keyword) {
-			filteredResults = fuse
-				.search({ fullName: keyword })
-				.map((result) => result.item);
-		} else if (specialty) {
-			filteredResults = fuse
-				.search({ specialtyId: specialty })
-				.map((result) => result.item);
-		} else {
-			filteredResults = "";
+	async filterDoctors() {
+		let { keyword, specialtyId } = this.state;
+		let res = await getDoctorByKeyword(keyword, specialtyId);
+		console.log(res);
+		if (res && res.code === 200) {
+			this.setState({
+				arrDoctorFilter: res.data,
+			});
 		}
-		this.setState({
-			arrDoctorFilter: filteredResults,
-		});
 	}
 
 	handleViewDetail = (doctor) => {
-		console.log("check doctor", doctor);
 		this.props.history.push(`/detail-doctor/${doctor.id}`);
 	};
 
@@ -297,7 +281,7 @@ class HomePage extends Component {
 						<select
 							name="specialty"
 							id="specialty-select"
-							value={this.state.specialty}
+							value={this.state.specialtyId}
 							onChange={(event) =>
 								this.handleOnchangeSelect(event, "specialty")
 							}

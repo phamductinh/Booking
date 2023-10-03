@@ -98,7 +98,7 @@ class confirmEmail extends Component {
 					</div>
 
 					<div className="booking-detail-doctor-container">
-						<div className="footer2">
+						<div className="footer2cf">
 							<div className="footer-left">
 								<p>&copy; 2022 Pham Duc Tinh</p>
 							</div>

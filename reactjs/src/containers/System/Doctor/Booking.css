@@ -321,3 +321,35 @@
 	padding: 20px;
 	cursor: pointer;
 }
+
+.time-content-btns {
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.btn-time {
+	padding: 8px 10px;
+	border: none;
+	outline: none;
+	background-color: #fff04b;
+	border-radius: 3px;
+	font-weight: 600;
+	color: #333;
+	min-width: 120px;
+}
+
+.btn-time:hover {
+	background-color: #45c3d2;
+	color: white;
+}
+
+.btn-disabled {
+	background-color: #bdbdbd !important;
+	color: rgb(68, 68, 68) !important;
+}
+
+.btn-selected {
+	background-color: #087d8a;
+	color: white;
+}

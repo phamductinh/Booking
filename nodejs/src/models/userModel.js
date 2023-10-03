@@ -78,7 +78,7 @@ let createUser = (userData, callback) => {
 		role = "User",
 		phoneNumber,
 	} = userData;
-	if (!email || !password || !fullName || !address || !gender) {
+	if (!email || !password || !fullName) {
 		let error = new Error(errMsg.missing_input);
 		error.statusCode = 400;
 		return callback(error);

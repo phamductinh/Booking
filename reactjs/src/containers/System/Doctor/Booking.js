@@ -2,17 +2,24 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { findDoctorByIdService } from "../../../services/doctorService";
 import { NumericFormat } from "react-number-format";
-import { Link } from "react-router-dom";
 import "./Booking.css";
 import { toast } from "react-toastify";
 import * as actions from "../../../store/actions/";
-import { bookingAnAppointmentService } from "../../../services/bookingService";
+import {
+	bookingAnAppointmentService,
+	getBookingByDate,
+} from "../../../services/bookingService";
+import LoadingSpinner from "../../../components/Common/Loading";
+import moment from "moment";
 
 class Booking extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			detailDoctor: "",
+			bookedTimes: [],
+			selectedButton: null,
+			isLoading: false,
 		};
 	}
 
@@ -41,66 +48,8 @@ class Booking extends Component {
 		});
 	};
 
-	handleBooking = async () => {
-		let formatedDate = new Date(this.state.date).getTime();
-		let formattedDate = new Date(formatedDate);
-
-		let day = formattedDate.getDate();
-		let month = formattedDate.getMonth() + 1;
-		let year = formattedDate.getFullYear();
-
-		let formattedDateString = `${day}/${month}/${year}`;
-		let data = {
-			userId: this.props.userInfor.id,
-			doctorId: this.props.match.params.id,
-			booking_date: formatedDate,
-			booking_time: this.state.time,
-			fullName: this.state.fullName,
-			gender: this.state.gender,
-			phoneNumber: this.state.phoneNumber,
-			birthday: this.state.birthday,
-			address: this.state.address,
-			reason: this.state.reason,
-			status: "Pending",
-			receiverEmail: this.props.userInfor.email,
-			doctorName: this.state.detailDoctor.fullName,
-			booking_date_formated: formattedDateString,
-		};
-		console.log("data", data);
-		try {
-			this.setState({
-				errMsgSignUp: "",
-				isLoading: true,
-			});
-			let response = await bookingAnAppointmentService(data);
-			console.log("check response", response);
-			toast.success("Đặt lịch thành công !");
-			this.setState({
-				isLoading: false,
-			});
-		} catch (error) {
-			console.log(error);
-			if (error.response) {
-				if (error.response.data) {
-					this.setState({
-						errMsgSignUp: error.response.data.msg,
-					});
-				}
-			}
-		}
-	};
-
-	handleViewBooking = () => {
-		let id = this.props.match.params.id;
-		this.props.history.push(`/booking/${id}`);
-	};
-
-	goBack = () => {
-		this.props.history.push(`/detail-doctor/${this.props.match.params.id}`);
-	};
-
-	render() {
-		let { detailDoctor } = this.state;
+	handleOnchangeDate = async (event) => {
+		let date = event.target.value;
 		const hours = [
 			"7:00",
 			"8:00",
@@ -113,7 +62,105 @@ class Booking extends Component {
 			"16:00",
 			"17:00",
 		];
-		let currentDate = new Date().toISOString().split("T")[0];
+
+		let currentDate = new Date();
+		currentDate.setHours(0, 0, 0, 0);
+		let dateChoosed = new Date(date);
+		dateChoosed.setHours(0, 0, 0, 0);
+
+		let formatDate = new Date(date).getTime();
+
+		this.setState({
+			hours: hours,
+			date: date,
+		});
+		let res = await getBookingByDate(formatDate);
+		if (res && res.code === 200) {
+			const bookingTimes = res.data.map((item) => item.booking_time);
+			if (currentDate.getTime() === dateChoosed.getTime()) {
+				const currentHour = new Date().getHours();
+				for (let i = 0; i < hours.length; i++) {
+					const [hour] = hours[i].split(":");
+					if (parseInt(hour, 10) <= currentHour) {
+						bookingTimes.push(hours[i]);
+					}
+				}
+			}
+			this.setState({
+				bookedTimes: bookingTimes,
+			});
+		}
+	};
+
+	handleButtonClick = async (e, item) => {
+		e.preventDefault();
+		if (this.state.selectedButton !== item) {
+			await this.setState({ selectedButton: item });
+		} else {
+			await this.setState({ selectedButton: null });
+		}
+	};
+
+	handleBooking = async () => {
+		let formatedDate = new Date(this.state.date).getTime();
+		let formattedDate = moment(formatedDate);
+
+		let formattedDateString = formattedDate.format("DD/MM/YYYY");
+		let data = {
+			userId: this.props.userInfor.id,
+			doctorId: this.props.match.params.id,
+			booking_date: formatedDate,
+			booking_time: this.state.selectedButton,
+			fullName: this.state.fullName,
+			gender: this.state.gender,
+			phoneNumber: this.state.phoneNumber,
+			birthday: this.state.birthday,
+			address: this.state.address,
+			reason: this.state.reason,
+			status: "Pending",
+			receiverEmail: this.props.userInfor.email,
+			doctorName: this.state.detailDoctor.fullName,
+			booking_date_formated: formattedDateString,
+		};
+		const isEmptyField = Object.values(data).some((value) => !value);
+
+		if (isEmptyField) {
+			this.setState({
+				errMsgSignUp: "Vui lòng điền đầy đủ thông tin!",
+			});
+		} else {
+			this.setState({
+				errMsgSignUp: "",
+				isLoading: true,
+			});
+			try {
+				let res = await bookingAnAppointmentService(data);
+				toast.success("Đặt lịch thành công !");
+				this.setState({
+					isLoading: false,
+				});
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data) {
+						this.setState({
+							errMsgSignUp: error.response.data.msg,
+							isLoading: false,
+						});
+					}
+				}
+			}
+		}
+	};
+
+	goBack = () => {
+		this.props.history.push(`/detail-doctor/${this.props.match.params.id}`);
+	};
+
+	render() {
+		let { detailDoctor, bookedTimes, hours, selectedButton, isLoading } =
+			this.state;
+
+		let currentDate = moment().format("YYYY-MM-DD");
 		return (
 			<>
 				<div className="booking-detail-doctor-container">
@@ -174,15 +221,50 @@ class Booking extends Component {
 										type="date"
 										min={currentDate}
 										onChange={(event) =>
-											this.handleOnchangeInput(
+											this.handleOnchangeDate(
 												event,
 												"date"
 											)
 										}
 									/>
 								</div>
-								<label htmlFor="">Chọn giờ khám:</label>
-								<div className="booking-input">
+								{hours && (
+									<>
+										<label htmlFor="">Chọn giờ khám:</label>
+										<div className="time-content-btns">
+											{hours.map((item, index) => {
+												const isDisabled =
+													bookedTimes.includes(item);
+												return (
+													<button
+														key={index}
+														className={`btn-time ${
+															isDisabled
+																? "btn-disabled"
+																: ""
+														} ${
+															selectedButton ===
+															item
+																? "btn-selected"
+																: ""
+														}`}
+														disabled={isDisabled}
+														onClick={(e) =>
+															this.handleButtonClick(
+																e,
+																item
+															)
+														}
+													>
+														{item}
+													</button>
+												);
+											})}
+										</div>
+									</>
+								)}
+
+								{/* <div className="booking-input">
 									<i className="fa-solid fa-clock"></i>
 									<select
 										value={this.state.hour}
@@ -203,7 +285,7 @@ class Booking extends Component {
 											</option>
 										))}
 									</select>
-								</div>
+								</div> */}
 								<div className="booking-input">
 									<i className="fa-solid fa-user"></i>
 									<input
@@ -515,6 +597,7 @@ class Booking extends Component {
 						</div>
 					</div>
 				</div>
+				{isLoading && <LoadingSpinner />}
 			</>
 		);
 	}

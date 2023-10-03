@@ -21,6 +21,19 @@ let sendSimpleEmail = async (dataSend) => {
 	});
 };
 
+let getBodyHTMLEmail = (dataSend) => {
+	let result = `
+        <h3>Xin chào ${dataSend.fullName}!</h3>
+        <p>Bạn nhận được email này vì bạn đã đặt lịch khám bệnh online trên Bookingcare.vn</p>
+        <p>Thông tin đặt lịch khám bệnh:</p>
+        <div><b>Ngày khám: ${dataSend.booking_date}</b></div>
+        <div><b>Thời gian: ${dataSend.booking_time}</b></div>
+        <div><b>Bác sĩ: ${dataSend.doctorName}</b></div>
+        <br />
+        <div>Xin chân thành cảm ơn !</div>
+    `; // html body
+	return result;
+};
 let sendConfirmEmail = async (dataSend) => {
 	let transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",

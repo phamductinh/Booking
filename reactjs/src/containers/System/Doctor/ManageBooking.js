@@ -154,7 +154,7 @@ class ManageBooking extends Component {
 											<td>{item.reason}</td>
 											<td>{item.status}</td>
 											<td className="text-center">
-												<button
+												{/* <button
 													className="btn-confirm"
 													onClick={() =>
 														this.handleConfirmBooking(
@@ -163,7 +163,7 @@ class ManageBooking extends Component {
 													}
 												>
 													Xác nhận
-												</button>
+												</button> */}
 												<button
 													className="btn-refuse"
 													onClick={() =>

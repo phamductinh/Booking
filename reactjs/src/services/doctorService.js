@@ -11,6 +11,12 @@ const findAllDoctorService = () => {
 	return axios.get("/api/get-all-doctor");
 };
 
+const getDoctorByKeyword = (keyword, specialtyId) => {
+	return axios.get(
+		`/api/get-doctor?keyword=${keyword}&specialtyId=${specialtyId}`
+	);
+};
+
 const handleCreateDoctor = (data) => {
 	return axios.post("/api/create-doctor", data);
 };
@@ -30,4 +36,5 @@ export {
 	deleteDoctor,
 	updateDoctor,
 	handleCreateDoctor,
+	getDoctorByKeyword,
 };
