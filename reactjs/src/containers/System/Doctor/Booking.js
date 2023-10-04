@@ -81,7 +81,7 @@ class Booking extends Component {
 				const currentHour = new Date().getHours();
 				for (let i = 0; i < hours.length; i++) {
 					const [hour] = hours[i].split(":");
-					if (parseInt(hour, 10) <= currentHour) {
+					if (parseInt(hour, 10) <= currentHour + 1) {
 						bookingTimes.push(hours[i]);
 					}
 				}
