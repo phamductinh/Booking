@@ -494,114 +494,130 @@ class ManageDoctor extends Component {
 					{setModalEditUser ? (
 						<div id="add-new-modal" className="modal">
 							<div className="modal-content">
-								<p>Sửa thông tin bác sĩ</p>
-								<input
-									className="email"
-									type="email"
-									placeholder="Email"
-									value={this.state.newEmail}
-									disabled
+								<p>Thêm mới bác sĩ</p>
+								<select
+									name="doctor"
+									id="doctor-select"
+									value={this.state.userId}
 									onChange={(event) =>
 										this.handleOnchangeModalInput(
 											event,
-											"newEmail"
+											"userId"
 										)
 									}
-								/>
-								<div className="pass-field">
+								>
+									<option value="" disabled>
+										Doctor
+									</option>
+									{arrDoctorAcc &&
+										arrDoctorAcc.length > 0 &&
+										arrDoctorAcc.map((item, index) => (
+											<option key={index} value={item.id}>
+												{item.fullName}
+											</option>
+										))}
+								</select>
+								<textarea
+									name="introduction"
+									id="introduction"
+									placeholder="Introduction"
+									cols="30"
+									rows="5"
+									value={this.state.introduction}
+									onChange={(event) =>
+										this.handleOnchangeModalInput(
+											event,
+											"introduction"
+										)
+									}
+								></textarea>
+
+								<div className="price-field">
 									<input
-										className="password-edit"
-										type="password"
-										disabled
-										autoComplete="off"
-										placeholder="Password"
-										value={this.state.newPassword}
+										className="price"
+										name="price"
+										type="text"
+										placeholder="Price"
+										value={this.state.price}
 										onChange={(event) =>
 											this.handleOnchangeModalInput(
 												event,
-												"newPassword"
+												"price"
+											)
+										}
+									/>
+									<input
+										className="doctor-image"
+										name="image"
+										type="file"
+										accept="image/png, image/jpeg"
+										onChange={(event) =>
+											this.handleOnchangeImage(
+												event,
+												"image"
 											)
 										}
 									/>
 								</div>
-								<input
-									className="fullname"
-									name="fullName"
-									type="text"
-									placeholder="Fullname"
-									value={this.state.fullName}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"fullName"
-										)
-									}
-								/>
-								<input
-									className="address"
-									name="address"
-									type="text"
-									placeholder="Address"
-									value={this.state.address}
-									onChange={(event) =>
-										this.handleOnchangeModalInput(
-											event,
-											"address"
-										)
-									}
-								/>
-
 								<div className="modal-select">
-									<input
-										className="phoneNumber"
-										type="tel"
-										placeholder="Phone"
-										value={this.state.phoneNumber}
-										onChange={(event) =>
-											this.handleOnchangeModalInput(
-												event,
-												"phoneNumber"
-											)
-										}
-									/>
 									<select
-										name="gender"
-										id="gender-select"
-										value={this.state.gender}
+										name="clinic"
+										id="clinic-select"
+										value={this.state.clinic}
 										onChange={(event) =>
 											this.handleOnchangeModalInput(
 												event,
-												"gender"
+												"clinic"
 											)
 										}
 									>
 										<option value="" disabled>
-											Gender
+											Clinic
 										</option>
-										<option value="Male">Male</option>
-										<option value="Female">Female</option>
-										<option value="Other">Other</option>
+										{arrClinics &&
+											arrClinics.length > 0 &&
+											arrClinics.map((item, index) => (
+												<option
+													key={index}
+													value={item.id}
+												>
+													{item.name}
+												</option>
+											))}
 									</select>
 
 									<select
-										name="role"
-										id="role-select"
-										value={this.state.role}
+										name="specialty"
+										id="specialty-select-doctor"
+										value={this.state.specialty}
 										onChange={(event) =>
 											this.handleOnchangeModalInput(
 												event,
-												"role"
+												"specialty"
 											)
 										}
 									>
 										<option value="" disabled>
-											Role
+											Specialty
 										</option>
-										<option value="Admin">Admin</option>
-										<option value="Doctor">Doctor</option>
-										<option value="User">User</option>
+										{arrSpecialty &&
+											arrSpecialty.length > 0 &&
+											arrSpecialty.map((item, index) => (
+												<option
+													key={index}
+													value={item.id}
+												>
+													{item.name}
+												</option>
+											))}
 									</select>
 								</div>
+								<MdEditor
+									style={{ height: "250px" }}
+									renderHTML={(text) => mdParser.render(text)}
+									onChange={this.handleEditorChange}
+									value={this.state.description}
+								/>
 								<div
 									className="errMsgSignUp"
 									style={{ color: "red" }}
@@ -613,9 +629,11 @@ class ManageDoctor extends Component {
 									<button
 										className="btn-add-new"
 										type="button"
-										onClick={() => this.handleEditUser()}
+										onClick={() =>
+											this.handleAddNewDoctor()
+										}
 									>
-										Save
+										Add
 									</button>
 									<button
 										className="btn-cancel"

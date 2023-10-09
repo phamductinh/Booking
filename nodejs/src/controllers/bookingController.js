@@ -57,6 +57,25 @@ let getBookingByDate = (req, res) => {
 	});
 };
 
+let getBookingByUserId = (req, res) => {
+	let userId = req.query.userId;
+	if (!userId) {
+		return res.status(400).send({ code: 400, msg: "Missing input!" });
+	}
+
+	bookingModel.getBookingByUserIdModel(userId, (error, results) => {
+		if (error) {
+			return res
+				.status(500)
+				.send({ code: 500, msg: "Internal server error" });
+		}
+		return res.send({
+			code: 200,
+			data: results,
+		});
+	});
+};
+
 let deleteBooking = (req, res) => {
 	let bookingId = req.query.id;
 	let data = req.body;
@@ -77,9 +96,26 @@ let deleteBooking = (req, res) => {
 	);
 };
 
+let cancelBooking = (req, res) => {
+	let bookingId = req.query.id;
+	if (!bookingId) {
+		return res.status(400).send({ code: 400, msg: "Missing id!" });
+	}
+
+	bookingModel.cancelBookingModel(bookingId, (error, results, fields) => {
+		if (error) throw error;
+		return res.send({
+			code: 200,
+			msg: "Cancel successfully!",
+		});
+	});
+};
+
 module.exports = {
 	bookingAnAppointment,
 	getBookingByDate,
 	confirmBooking,
 	deleteBooking,
+	getBookingByUserId,
+	cancelBooking,
 };

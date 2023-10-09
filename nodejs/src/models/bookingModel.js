@@ -5,6 +5,7 @@ import {
 	getBookingByDateQuery,
 	confirmBookingQuery,
 	deleteBookingById,
+	getBookingByUserIdQuery,
 } from "../database/queries";
 import emailService from "../services/emailService";
 
@@ -95,6 +96,15 @@ let getBookingByDateModel = (date, callback) => {
 	});
 };
 
+let getBookingByUserIdModel = (userId, callback) => {
+	db.query(getBookingByUserIdQuery, userId, (error, results) => {
+		if (error) {
+			return callback(error);
+		}
+		return callback(null, results);
+	});
+};
+
 let deleteBookingModel = async (bookingId, data, callback) => {
 	await emailService.sendDeclineEmail({
 		receiverEmail: data.receiverEmail,
@@ -103,9 +113,15 @@ let deleteBookingModel = async (bookingId, data, callback) => {
 	return db.query(deleteBookingById, [bookingId], callback);
 };
 
+let cancelBookingModel = async (bookingId, callback) => {
+	return db.query(deleteBookingById, [bookingId], callback);
+};
+
 module.exports = {
 	bookingAnAppointmentModel,
 	getBookingByDateModel,
 	confirmBookingModel,
 	deleteBookingModel,
+	getBookingByUserIdModel,
+    cancelBookingModel
 };

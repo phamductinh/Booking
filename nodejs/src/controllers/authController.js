@@ -16,7 +16,6 @@ let register = (req, res, next) => {
 					msg: "This user is already in use!",
 				});
 			} else {
-				// username is available
 				bcrypt.hash(req.body.password, 10, (err, hash) => {
 					if (err) {
 						return res.status(400).send({
@@ -66,9 +65,7 @@ let login = async (req, res) => {
 					msg: "Email không hợp lệ!",
 				});
 			}
-			// check password
 			bcrypt.compare(password, result[0]["password"], (bErr, bResult) => {
-				// wrong password
 				if (bErr) {
 					throw bErr;
 				}

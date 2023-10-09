@@ -99,6 +99,18 @@ class HomePage extends Component {
 	handleViewDetail = (doctor) => {
 		this.props.history.push(`/detail-doctor/${doctor.id}`);
 	};
+	handleViewUpdateInfor = () => {
+		if (this.props.userInfor) {
+			this.props.history.push(`/update-infor/${this.props.userInfor.id}`);
+		}
+	};
+	handleViewBookingHistory = () => {
+		if (this.props.userInfor) {
+			this.props.history.push(
+				`/booking-history/${this.props.userInfor.id}`
+			);
+		}
+	};
 
 	handleNext() {
 		let lists = document.querySelectorAll(".doctor-slide-item");
@@ -196,14 +208,22 @@ class HomePage extends Component {
 												</div>
 											</div>
 											<div className="update-infor">
-												<Link to="/update-infor">
+												<div
+													onClick={() =>
+														this.handleViewUpdateInfor()
+													}
+												>
 													Chỉnh sửa thông tin
-												</Link>
+												</div>
 											</div>
 											<div className="his-booking">
-												<Link to="/history-booking">
+												<div
+													onClick={() =>
+														this.handleViewBookingHistory()
+													}
+												>
 													Lịch sử đặt lịch
-												</Link>
+												</div>
 											</div>
 											<button
 												className="btn-logout"

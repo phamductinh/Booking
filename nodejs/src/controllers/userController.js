@@ -43,6 +43,7 @@ let getUser = (req, res) => {
 		if (error) {
 			throw error;
 		}
+		delete user.password;
 		return res.send({
 			code: 200,
 			data: user,

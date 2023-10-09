@@ -76,7 +76,6 @@ class ManageBooking extends Component {
 	};
 
 	handleConfirmDelete = (item) => {
-		console.log(item);
 		this.setState({
 			confirmDelete: true,
 			bookingId: item.id,

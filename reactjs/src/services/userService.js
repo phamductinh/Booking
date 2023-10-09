@@ -26,6 +26,9 @@ const getDoctorAcc = () => {
 const deleteUser = (userId) => {
 	return axios.delete(`/api/delete-user?id=${userId}`);
 };
+const getUserById = (userId) => {
+	return axios.get(`/api/get-user?id=${userId}`);
+};
 
 const editUser = (userData) => {
 	return axios.put("/api/edit-user", userData);
@@ -38,5 +41,6 @@ export {
 	deleteUser,
 	editUser,
 	getDoctorAcc,
-    handleConfirmEmail
+	handleConfirmEmail,
+    getUserById
 };

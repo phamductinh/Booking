@@ -43,11 +43,18 @@ JOIN user ON user.id = booking.userId
 JOIN doctor ON doctor.id = booking.doctorId
 WHERE status = 'Pending' AND booking_date = ?`;
 
+let getBookingByUserIdQuery = `SELECT booking.*, user.email as patientEmail
+FROM booking 
+JOIN user ON user.id = booking.userId
+JOIN doctor ON doctor.id = booking.doctorId
+WHERE status = 'Pending' AND user.id = ?`;
+
 let confirmBookingQuery = `UPDATE booking SET status = 'Confirmed' WHERE id = ?`;
 
 let deleteBookingById = `DELETE FROM booking WHERE id = ?`;
 
 module.exports = {
+	getBookingByUserIdQuery,
 	findBookedAppointmentQuery,
 	bookingAnAppointmentQuery,
 	getBookingByDateQuery,

@@ -40,8 +40,13 @@ let initWebRoutes = (app) => {
 		bookingController.bookingAnAppointment
 	);
 	router.get("/api/get-booking-by-date", bookingController.getBookingByDate);
+	router.get(
+		"/api/get-booking-by-userId",
+		bookingController.getBookingByUserId
+	);
 	router.put("/api/confirm-booking", bookingController.confirmBooking);
 	router.delete("/api/delete-booking", bookingController.deleteBooking);
+	router.delete("/api/cancel-booking", bookingController.cancelBooking);
 
 	return app.use("/", router);
 };
