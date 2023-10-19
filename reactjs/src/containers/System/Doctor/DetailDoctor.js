@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { findDoctorByIdService } from "../../../services/doctorService";
+import {
+	findDoctorByIdService,
+	handleCreateFeedback,
+	getFeedbackByDoctorId,
+	updateFeedback,
+} from "../../../services/doctorService";
 import { NumericFormat } from "react-number-format";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { toast } from "react-toastify";
 import "./DetailDoctor.css";
 
 class DetailDoctor extends Component {
@@ -11,11 +17,11 @@ class DetailDoctor extends Component {
 		super(props);
 		this.state = {
 			detailDoctor: "",
+			isShowUpdate: false,
 		};
 	}
 
 	async componentDidMount() {
-		window.scrollTo(0, 0);
 		if (
 			this.props.match &&
 			this.props.match.params &&
@@ -23,22 +29,100 @@ class DetailDoctor extends Component {
 		) {
 			let id = this.props.match.params.id;
 			let res = await findDoctorByIdService(id);
-            console.log(res)
 			if (res && res.code === 200) {
 				this.setState({
 					detailDoctor: res.data,
 				});
 			}
 		}
+		this.getAllFeedbacks();
 	}
 
+	getAllFeedbacks = async () => {
+		if (
+			this.props.match &&
+			this.props.match.params &&
+			this.props.match.params.id
+		) {
+			let doctorId = this.props.match.params.id;
+			let res = await getFeedbackByDoctorId(doctorId);
+			console.log(res);
+			if (res && res.code === 200) {
+				this.setState({
+					feedbacks: res.data,
+				});
+			}
+		}
+	};
+
+	handleOnchangeInput = (event) => {
+		this.setState({
+			comment: event.target.value,
+		});
+	};
+
+	handleAddNewFeedback = async () => {
+		let data = {
+			doctorId: this.props.match.params.id,
+			comment: this.state.comment,
+			userId: this.props.userInfor.id,
+		};
+
+		const isEmptyField = Object.values(data).some((value) => !value);
+
+		if (isEmptyField) {
+			console.log("Vui lòng điền đầy đủ thông tin!");
+		} else {
+			try {
+				let res = await handleCreateFeedback(data);
+				toast.success("Đánh giá thành công!");
+				this.getAllFeedbacks();
+				this.setState({
+					comment: "",
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
+
+	handleUpdateFeedback = async () => {
+		let data = {
+			comment: this.state.comment,
+			id: this.state.feedbackId,
+		};
+		try {
+			let res = await updateFeedback(data);
+			toast.success("Chỉnh sửa thành công!");
+			this.setState({
+				isShowUpdate: false,
+				comment: "",
+			});
+			this.getAllFeedbacks();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	handleShowUpdate = (item) => {
+		this.setState((prevState) => ({
+			feedbackId: item.id,
+			comment: item.comment,
+			isShowUpdate: !prevState.isShowUpdate,
+		}));
+	};
+
 	handleViewBooking = () => {
-		let id = this.props.match.params.id;
-		this.props.history.push(`/booking/${id}`);
+		if (this.props.isLoggedIn) {
+			let id = this.props.match.params.id;
+			this.props.history.push(`/booking/${id}`);
+		} else {
+			this.props.history.push("/login");
+		}
 	};
 
 	render() {
-		let { detailDoctor } = this.state;
+		let { detailDoctor, feedbacks, isShowUpdate } = this.state;
 		return (
 			<>
 				<div className="detail-doctor-container">
@@ -69,13 +153,13 @@ class DetailDoctor extends Component {
 													detailDoctor.image,
 													"base64"
 											  ).toString("binary")
-											: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+											: "https://hienthao.com/wp-content/uploads/2023/05/c6e56503cfdd87da299f72dc416023d4-736x620.jpg"
 									})`,
 								}}
 							></div>
 							<div className="detail-doctor-infors">
 								<h1>Bác sĩ {detailDoctor.fullName}</h1>
-								<p>{detailDoctor.introduction}</p>
+								<div>{detailDoctor.introduction}</div>
 							</div>
 						</div>
 						<div className="detail-doctor-schedule">
@@ -123,6 +207,75 @@ class DetailDoctor extends Component {
 								__html: detailDoctor.description,
 							}}
 						></div>
+						<div className="feedback-container">
+							<p className="feedback-title">
+								Phản hồi của bệnh nhân sau khi đi khám
+							</p>
+
+							{feedbacks &&
+								feedbacks.map((item, index) => {
+									let isMeSelf =
+										this.props.userInfor &&
+										item.userId === this.props.userInfor.id;
+
+									return (
+										<div className="feedback-item">
+											<div className="feedback-name">
+												{item.fullName}
+											</div>
+											<div className="feedback-content">
+												{item.comment}{" "}
+												{isMeSelf && (
+													<a
+														href="#/"
+														onClick={() =>
+															this.handleShowUpdate(
+																item
+															)
+														}
+													>
+														Sửa
+													</a>
+												)}
+											</div>
+										</div>
+									);
+								})}
+
+							<div className="feedback-input-container">
+								<textarea
+									name=""
+									id=""
+									className="feedback-input"
+									cols="30"
+									rows="2"
+									placeholder="Đánh giá bác sĩ"
+									value={this.state.comment}
+									onChange={(event) =>
+										this.handleOnchangeInput(event)
+									}
+								></textarea>
+								{isShowUpdate ? (
+									<button
+										className="btn-feedback"
+										onClick={() =>
+											this.handleUpdateFeedback()
+										}
+									>
+										<i class="fa-solid fa-pen"></i>
+									</button>
+								) : (
+									<button
+										className="btn-feedback"
+										onClick={() =>
+											this.handleAddNewFeedback()
+										}
+									>
+										<i class="fa-regular fa-paper-plane"></i>
+									</button>
+								)}
+							</div>
+						</div>
 
 						{/* <div className="introduction">
 							<div className="bookingcare-role-btn">
@@ -198,7 +351,7 @@ class DetailDoctor extends Component {
 						<div className="more-questions">
 							<p>
 								Cần tìm hiểu thêm?
-								<a href="#">Xem câu hỏi thường gặp.</a>
+								<a href="#/">Xem câu hỏi thường gặp.</a>
 							</p>
 						</div>
 
@@ -228,24 +381,24 @@ class DetailDoctor extends Component {
 							<div className="list-features">
 								<ul>
 									<li>
-										<a href="#">Liên hệ hợp tác</a>
+										<a href="#/">Liên hệ hợp tác</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="#/">
 											Gói chuyển đổi số doanh nghiệp
 										</a>
 									</li>
 									<li>
-										<a href="#">Tuyển dụng</a>
+										<a href="#/">Tuyển dụng</a>
 									</li>
 									<li>
-										<a href="#">Câu hỏi thường gặp</a>
+										<a href="#/">Câu hỏi thường gặp</a>
 									</li>
 									<li>
-										<a href="#">Điều khoản sử dụng</a>
+										<a href="#/">Điều khoản sử dụng</a>
 									</li>
 									<li>
-										<a href="#">Chính sách Bảo mật</a>
+										<a href="#/">Chính sách Bảo mật</a>
 									</li>
 								</ul>
 							</div>
@@ -287,7 +440,10 @@ class DetailDoctor extends Component {
 }
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		isLoggedIn: state.user.isLoggedIn,
+		userInfor: state.user.userInfo,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {

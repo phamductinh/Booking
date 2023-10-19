@@ -24,7 +24,7 @@ class ManageBooking extends Component {
 
 	async componentDidMount() {}
 
-	handleDeleteUser = async () => {
+	handleDeleteBooking = async () => {
 		let data = {
 			fullName: this.state.fullName,
 			receiverEmail: this.state.patientEmail,
@@ -196,7 +196,7 @@ class ManageBooking extends Component {
 								</button>
 								<button
 									className="confirmation-button"
-									onClick={() => this.handleDeleteUser()}
+									onClick={() => this.handleDeleteBooking()}
 								>
 									Từ chối
 								</button>

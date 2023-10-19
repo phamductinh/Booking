@@ -298,7 +298,7 @@ class ManageDoctor extends Component {
 																  ).toString(
 																		"binary"
 																  )
-																: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+																: "https://hienthao.com/wp-content/uploads/2023/05/c6e56503cfdd87da299f72dc416023d4-736x620.jpg"
 														})`,
 													}}
 												></div>

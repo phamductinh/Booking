@@ -53,7 +53,16 @@ let confirmBookingQuery = `UPDATE booking SET status = 'Confirmed' WHERE id = ?`
 
 let deleteBookingById = `DELETE FROM booking WHERE id = ?`;
 
+let createAFeedbackQuery = `INSERT INTO review (doctorId, comment, userId) VALUES (?,?,?)`;
+
+let getFeedbackByDoctorIdQuery = `SELECT review.*, user.fullName FROM review JOIN user ON user.id = review.userId WHERE doctorId = ?`;
+
+let updateFeedbackQuery = `UPDATE review SET comment = ? WHERE id = ?`;
+
 module.exports = {
+	updateFeedbackQuery,
+	getFeedbackByDoctorIdQuery,
+	createAFeedbackQuery,
 	getBookingByUserIdQuery,
 	findBookedAppointmentQuery,
 	bookingAnAppointmentQuery,

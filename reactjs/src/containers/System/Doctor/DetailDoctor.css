@@ -81,7 +81,7 @@
 	display: flex;
 }
 .detail-doctor-schedule-left {
-    padding-top: 20px;
+	padding-top: 20px;
 	width: 50%;
 }
 .date-chooser {
@@ -144,7 +144,7 @@
 }
 .exam-address p {
 	padding-left: 15px;
-    font-size: 16;
+	font-size: 16;
 }
 .exam-price h3 {
 	border-bottom: 1px solid #efefef;
@@ -188,14 +188,14 @@
 }
 .booking-now a {
 	text-decoration: none;
-    text-transform: uppercase;
+	text-transform: uppercase;
 	font-size: 18px;
 	color: red;
 	font-weight: bold;
 }
 .booking-now a i {
 	font-size: 20px;
-    margin-left: 6px;
+	margin-left: 6px;
 }
 .detail-doctor-introduction {
 	width: 100%;
@@ -377,4 +377,61 @@
 	font-size: 20px;
 	padding: 20px;
 	cursor: pointer;
+}
+
+.feedback-container {
+	padding: 20px 80px;
+}
+
+.feedback-title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.feedback-item {
+	border-top: 1px solid #eee;
+	margin-top: 10px;
+}
+
+.feedback-name {
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+.feedback-input-container {
+	margin-top: 30px;
+}
+
+.feedback-input {
+	width: 100%;
+	outline: none;
+	padding: 10px;
+	font-size: 17px;
+	border-radius: 5px;
+}
+
+.btn-feedback {
+	border: none;
+	outline: none;
+	position: absolute;
+	background: transparent;
+	right: 90px;
+	margin-top: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.btn-feedback:hover i {
+	color: #238a95;
+}
+
+.btn-feedback i {
+	font-size: 30px;
+	color: #45c3d2;
+}
+
+.feedback-content a {
+	text-decoration: none;
+	padding-left: 5px;
 }

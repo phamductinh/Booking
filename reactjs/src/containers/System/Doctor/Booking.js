@@ -102,53 +102,57 @@ class Booking extends Component {
 	};
 
 	handleBooking = async () => {
-		let formatedDate = new Date(this.state.date).getTime();
-		let formattedDate = moment(formatedDate);
+		if (this.props.isLoggedIn) {
+			let formatedDate = new Date(this.state.date).getTime();
+			let formattedDate = moment(formatedDate);
 
-		let formattedDateString = formattedDate.format("DD/MM/YYYY");
-		let data = {
-			userId: this.props.userInfor.id,
-			doctorId: this.props.match.params.id,
-			booking_date: formatedDate,
-			booking_time: this.state.selectedButton,
-			fullName: this.state.fullName,
-			gender: this.state.gender,
-			phoneNumber: this.state.phoneNumber,
-			birthday: this.state.birthday,
-			address: this.state.address,
-			reason: this.state.reason,
-			status: "Pending",
-			receiverEmail: this.props.userInfor.email,
-			doctorName: this.state.detailDoctor.fullName,
-			booking_date_formated: formattedDateString,
-		};
-		const isEmptyField = Object.values(data).some((value) => !value);
+			let formattedDateString = formattedDate.format("DD/MM/YYYY");
+			let data = {
+				userId: this.props.userInfor.id,
+				doctorId: this.props.match.params.id,
+				booking_date: formatedDate,
+				booking_time: this.state.selectedButton,
+				fullName: this.state.fullName,
+				gender: this.state.gender,
+				phoneNumber: this.state.phoneNumber,
+				birthday: this.state.birthday,
+				address: this.state.address,
+				reason: this.state.reason,
+				status: "Pending",
+				receiverEmail: this.props.userInfor.email,
+				doctorName: this.state.detailDoctor.fullName,
+				booking_date_formated: formattedDateString,
+			};
+			const isEmptyField = Object.values(data).some((value) => !value);
 
-		if (isEmptyField) {
-			this.setState({
-				errMsgSignUp: "Vui lòng điền đầy đủ thông tin!",
-			});
-		} else {
-			this.setState({
-				errMsgSignUp: "",
-				isLoading: true,
-			});
-			try {
-				let res = await bookingAnAppointmentService(data);
-				toast.success("Đặt lịch thành công !");
+			if (isEmptyField) {
 				this.setState({
-					isLoading: false,
+					errMsgSignUp: "Vui lòng điền đầy đủ thông tin!",
 				});
-			} catch (error) {
-				if (error.response) {
-					if (error.response.data) {
-						this.setState({
-							errMsgSignUp: error.response.data.msg,
-							isLoading: false,
-						});
+			} else {
+				this.setState({
+					errMsgSignUp: "",
+					isLoading: true,
+				});
+				try {
+					let res = await bookingAnAppointmentService(data);
+					toast.success("Đặt lịch thành công !");
+					this.setState({
+						isLoading: false,
+					});
+				} catch (error) {
+					if (error.response) {
+						if (error.response.data) {
+							this.setState({
+								errMsgSignUp: error.response.data.msg,
+								isLoading: false,
+							});
+						}
 					}
 				}
 			}
+		} else {
+			this.props.history.push("/login");
 		}
 	};
 
@@ -192,7 +196,7 @@ class Booking extends Component {
 													detailDoctor.image,
 													"base64"
 											  ).toString("binary")
-											: "https://ihfeducation.ihf.info/images/no_avatar.gif"
+											: "https://hienthao.com/wp-content/uploads/2023/05/c6e56503cfdd87da299f72dc416023d4-736x620.jpg"
 									})`,
 								}}
 							></div>
@@ -514,7 +518,7 @@ class Booking extends Component {
 						<div className="more-questions">
 							<p>
 								Cần tìm hiểu thêm?
-								<a href="#">Xem câu hỏi thường gặp.</a>
+								<a href="#/">Xem câu hỏi thường gặp.</a>
 							</p>
 						</div>
 
@@ -544,24 +548,24 @@ class Booking extends Component {
 							<div className="list-features">
 								<ul>
 									<li>
-										<a href="#">Liên hệ hợp tác</a>
+										<a href="#/">Liên hệ hợp tác</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="#/">
 											Gói chuyển đổi số doanh nghiệp
 										</a>
 									</li>
 									<li>
-										<a href="#">Tuyển dụng</a>
+										<a href="#/">Tuyển dụng</a>
 									</li>
 									<li>
-										<a href="#">Câu hỏi thường gặp</a>
+										<a href="#/">Câu hỏi thường gặp</a>
 									</li>
 									<li>
-										<a href="#">Điều khoản sử dụng</a>
+										<a href="#/">Điều khoản sử dụng</a>
 									</li>
 									<li>
-										<a href="#">Chính sách Bảo mật</a>
+										<a href="#/">Chính sách Bảo mật</a>
 									</li>
 								</ul>
 							</div>
@@ -604,7 +608,10 @@ class Booking extends Component {
 }
 
 const mapStateToProps = (state) => {
-	return { userInfor: state.user.userInfo };
+	return {
+		userInfor: state.user.userInfo,
+		isLoggedIn: state.user.isLoggedIn,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {

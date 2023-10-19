@@ -31,7 +31,13 @@ let initWebRoutes = (app) => {
 	router.get("/api/get-all-doctor", doctorController.getAllDoctor);
 	router.get("/api/get-doctor", doctorController.getDoctorByKeyword);
 	router.get("/api/get-doctor-by-id", doctorController.getDoctorById);
+	router.get(
+		"/api/get-feedback-by-doctorId",
+		doctorController.getFeedbackByDoctorId
+	);
 	router.post("/api/create-doctor", doctorController.createADoctor);
+	router.post("/api/create-feedback", doctorController.createAFeedback);
+	router.put("/api/update-feedback", doctorController.updateFeedback);
 
 	router.get("/api/get-all-clinics", clinicController.getAllClinics);
 
