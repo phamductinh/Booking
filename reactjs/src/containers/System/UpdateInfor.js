@@ -221,7 +221,9 @@ class UpdateInfor extends Component {
 				</div>
 
 				<div className="update-user-container">
-					<div className="update-avt"></div>
+					<div className="text-center">
+						<h1 className="text-primary m-2">Thông tin cá nhân</h1>
+					</div>
 					<form className="update-form">
 						<div class="form-group row m-4">
 							<label
