@@ -43,6 +43,12 @@ JOIN user ON user.id = booking.userId
 JOIN doctor ON doctor.id = booking.doctorId
 WHERE status = 'Pending' AND booking_date = ?`;
 
+let getEmailPatientsQuery = `SELECT booking.*, user.email as patientEmail, doctor.name as doctorName 
+FROM booking
+JOIN user ON user.id = booking.userId
+JOIN doctor ON doctor.id = booking.doctorId
+WHERE status = 'Pending'`;
+
 let getBookingByUserIdQuery = `SELECT booking.*, user.email as patientEmail
 FROM booking 
 JOIN user ON user.id = booking.userId
@@ -60,6 +66,7 @@ let getFeedbackByDoctorIdQuery = `SELECT review.*, user.fullName FROM review JOI
 let updateFeedbackQuery = `UPDATE review SET comment = ? WHERE id = ?`;
 
 module.exports = {
+	getEmailPatientsQuery,
 	updateFeedbackQuery,
 	getFeedbackByDoctorIdQuery,
 	createAFeedbackQuery,

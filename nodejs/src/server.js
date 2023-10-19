@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import viewEngine from "./configs/viewEngine";
 import initWebRoutes from "./routes/web";
 import fileUpload from "express-fileupload";
+import { sendRemindEmail } from "./sendEmail";
 
 require("dotenv").config();
 
@@ -48,6 +49,8 @@ app.use((err, req, res, next) => {
 	res.status(status);
 	res.render("error");
 });
+
+sendRemindEmail();
 
 let port = process.env.PORT || 9999;
 app.listen(port, () => {

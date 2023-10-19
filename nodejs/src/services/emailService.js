@@ -100,8 +100,43 @@ let sendDeclineEmail = async (dataSend) => {
 	});
 };
 
+let sendReminderEmail = async (dataSend) => {
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: process.env.EMAIL_APP, // generated ethereal user
+			pass: process.env.EMAIL_APP_PASSWORD, // generated ethereal password
+		},
+	});
+
+	// send mail with defined transport object
+	let info = await transporter.sendMail({
+		from: '"Phạm Đức Tịnh 👻" <phamductinh.t18@gmail.com>', // sender address
+		to: dataSend.receiverEmail, // list of receivers
+		subject: "Nhắc hẹn", // Subject line
+		html: getBodyReminderEmail(dataSend),
+	});
+};
+
+let getBodyReminderEmail = (dataSend) => {
+	let result = `
+        <h3>Xin chào ${dataSend.fullName}!</h3>
+        <p>Bạn có một lịch khám bệnh vào ngày mai, đừng quên tới đúng giờ nhé!</p>
+        <p>Thông tin đặt lịch khám bệnh:</p>
+        <div><b>Ngày khám: ${dataSend.booking_date}</b></div>
+        <div><b>Thời gian: ${dataSend.booking_time}</b></div>
+        <div><b>Bác sĩ: ${dataSend.doctorName}</b></div>
+        <br />
+        <div>Xin chân thành cảm ơn !</div>
+    `; // html body
+	return result;
+};
+
 module.exports = {
 	sendSimpleEmail,
 	sendDeclineEmail,
 	sendConfirmEmail,
+	sendReminderEmail,
 };
