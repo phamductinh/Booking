@@ -86,11 +86,18 @@ class SignUp extends Component {
 		}
 	};
 
+	handleShowHome = () => {
+		this.props.history.push(`/`);
+	};
+
 	render() {
 		return (
 			<div className="signup-container">
 				<div className="signup-box">
-					<h2>Tạo tài khoản</h2>
+					<div
+						className="login-logo"
+						onClick={() => this.handleShowHome()}
+					></div>
 					<form className="signup-form">
 						<div className="form-container">
 							<div className="input-group">

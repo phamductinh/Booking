@@ -26,9 +26,9 @@ let findAllClinicQuery = "SELECT * FROM clinic";
 
 let findAllDoctor = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id as doctorId, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id WHERE user.role = "Doctor"`;
 
-let findDoctorBySpecialty = `SELECT user.id, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialty,  doctor.price FROM user JOIN doctor ON user.id = doctor.userId WHERE user.role = "Doctor" AND doctor.specialtyId = ?`;
+let findDoctorBySpecialty = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image, clinic.name as clinicName FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id JOIN clinic ON doctor.clinicId = clinic.id WHERE user.role = "Doctor" AND doctor.specialtyId = ?`;
 
-let findDoctorByIdQuery = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.id, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image, clinic.name as clinicName FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id JOIN clinic ON doctor.clinicId = clinic.id WHERE user.role = "Doctor" AND doctor.id = ?`;
+let findDoctorByIdQuery = `SELECT doctor.id as id, user.id as userId, user.email, user.fullName, user.address, user.gender, user.phoneNumber, doctor.introduction, doctor.description, doctor.specialtyId, doctor.price, specialty.name as specialtyName, doctor.image, clinic.name as clinicName FROM user JOIN doctor ON user.id = doctor.userId JOIN specialty ON doctor.specialtyId = specialty.id JOIN clinic ON doctor.clinicId = clinic.id WHERE user.role = "Doctor" AND doctor.id = ?`;
 
 let createADoctorQuery = `INSERT INTO doctor (userId, introduction, description, specialtyId,  price, image, clinicId) VALUES (?,?,?,?,?,?,?)`;
 
@@ -43,7 +43,7 @@ JOIN user ON user.id = booking.userId
 JOIN doctor ON doctor.id = booking.doctorId
 WHERE status = 'Pending' AND booking_date = ?`;
 
-let getEmailPatientsQuery = `SELECT booking.*, user.email as patientEmail, doctor.name as doctorName 
+let getEmailPatientsQuery = `SELECT booking.*, user.email as patientEmail, user.fullName as doctorName 
 FROM booking
 JOIN user ON user.id = booking.userId
 JOIN doctor ON doctor.id = booking.doctorId
@@ -65,7 +65,17 @@ let getFeedbackByDoctorIdQuery = `SELECT review.*, user.fullName FROM review JOI
 
 let updateFeedbackQuery = `UPDATE review SET comment = ? WHERE id = ?`;
 
+let findAllNhanKhau = "SELECT * FROM nhankhau";
+let createNhanKhauQuery =
+	"INSERT INTO nhankhau (HoTen,BiDanh,NgayThangNamSinh,NoiSinh,NguyenQuan,NoiLamViec,QuanHeVoiChuHo,SoCMND_CCDC,NgheNghiep,HoKhauID,DiaChiTruocKhiChuyenDen,DanToc,NgayCapCCND_CCDC) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+let updateNhanKhauQuery = `UPDATE nhankhau SET HoTen = ?, BiDanh=?, NgayThangNamSinh=?, NoiSinh=?, NguyenQuan=?, NoiLamViec=?, QuanHeVoiChuHo=?, SoCMND_CCDC=?, NgheNghiep=?, HoKhauID=?, DiaChiTruocKhiChuyenDen=?, DanToc=?, NgayCapCCND_CCDC=? WHERE MaSoDinhDanh = ?`;
+let deleteNhanKhauQuery = "DELETE FROM nhankhau WHERE MaSoDinhDanh = ?";
+
 module.exports = {
+	deleteNhanKhauQuery,
+	updateNhanKhauQuery,
+	createNhanKhauQuery,
+	findAllNhanKhau,
 	getEmailPatientsQuery,
 	updateFeedbackQuery,
 	getFeedbackByDoctorIdQuery,

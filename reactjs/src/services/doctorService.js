@@ -40,6 +40,12 @@ const updateFeedback = (data) => {
 	return axios.put("/api/update-feedback", data);
 };
 
+const getDoctorBySpecialtyId = (id) => {
+	return axios.get(`/api/get-doctor-by-specialtyId?id=${id}`);
+};
+
+
+
 export {
 	findDoctorService,
 	findAllDoctorService,
@@ -51,4 +57,5 @@ export {
 	handleCreateFeedback,
 	getFeedbackByDoctorId,
 	updateFeedback,
+    getDoctorBySpecialtyId
 };

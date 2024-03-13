@@ -5,6 +5,7 @@ import specialtyController from "../controllers/specialtyController";
 import doctorController from "../controllers/doctorController";
 import clinicController from "../controllers/clinicController";
 import bookingController from "../controllers/bookingController";
+import otherController from "../controllers/otherController";
 
 let router = express.Router();
 
@@ -23,7 +24,7 @@ let initWebRoutes = (app) => {
 	router.get("/api/get-all-specialty", specialtyController.getAllSpecialty);
 	router.post("/api/create-specialty", specialtyController.createSpecialty);
 	router.delete(
-		"/api/delete-telemedicine",
+		"/api/delete-specialty",
 		specialtyController.deleteSpecialty
 	);
 	router.put("/api/update-specialty", specialtyController.updateSpecialty);
@@ -31,6 +32,7 @@ let initWebRoutes = (app) => {
 	router.get("/api/get-all-doctor", doctorController.getAllDoctor);
 	router.get("/api/get-doctor", doctorController.getDoctorByKeyword);
 	router.get("/api/get-doctor-by-id", doctorController.getDoctorById);
+	router.get("/api/get-doctor-by-specialtyId", doctorController.getDoctorBySpecialtyId);
 	router.get(
 		"/api/get-feedback-by-doctorId",
 		doctorController.getFeedbackByDoctorId
@@ -53,6 +55,15 @@ let initWebRoutes = (app) => {
 	router.put("/api/confirm-booking", bookingController.confirmBooking);
 	router.delete("/api/delete-booking", bookingController.deleteBooking);
 	router.delete("/api/cancel-booking", bookingController.cancelBooking);
+
+	router.get("/api/v1/nhankhau", otherController.getAllNhanKhau);
+	router.post("/api/v1/create-nhankhau", otherController.createNhanKhau);
+	router.put("/api/v1/update-nhankhau", otherController.updateNhanKhau);
+	router.delete("/api/v1/delete-nhankhau", otherController.deleteNhanKhau);
+	router.get(
+		"/api/v1/get-nhankhau-by-name",
+		otherController.getNhanKhauByName
+	);
 
 	return app.use("/", router);
 };

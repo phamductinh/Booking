@@ -1,0 +1,736 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+* {
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	box-sizing: border-box;
+	font: 14px/1.5 "Montserrat", sans-serif;
+}
+.detail-tele-header {
+	height: 60px;
+	width: 100%;
+	position: relative;
+	display: flex;
+	background: #45c3d2;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.detail-tele-header-left {
+	padding: 17px 20px;
+	display: inline-flex;
+}
+.detail-tele-header-left i {
+	font-size: 20px;
+	padding: 2px 20px;
+	cursor: pointer;
+	color: white;
+}
+.detail-tele-header-left h2 {
+	font-size: 17px;
+	color: #ffffff;
+}
+.detail-tele-header-right {
+	position: absolute;
+	display: inline-flex;
+	padding: 20px 20px;
+	right: 0;
+}
+.detail-tele-header-right .fas {
+	font-size: 22px;
+	color: #ffffff;
+	padding: 0 20px;
+	cursor: pointer;
+}
+.detail-tele-header-support {
+	color: #ffffff;
+	cursor: pointer;
+}
+.detail-tele-header-right i {
+	color: #ffffff;
+	cursor: pointer;
+}
+@media screen and (max-width: 600px) {
+	.detail-tele-header-left {
+		padding-left: 5px;
+	}
+	.detail-tele-header-left i {
+		padding-left: 10px;
+		font-size: 17px;
+	}
+	.detail-tele-header-left h2 {
+		padding-top: 2px;
+		font-size: 15px;
+	}
+	.detail-tele-header-right {
+		padding-right: 5px;
+	}
+	.detail-tele-header-right .fas {
+		padding-right: 5px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.detail-tele-header-left {
+		padding-left: 5px;
+	}
+	.detail-tele-header-left i {
+		padding-left: 10px;
+		font-size: 17px;
+	}
+	.detail-tele-header-left h2 {
+		padding-top: 2px;
+		font-size: 15px;
+	}
+	.detail-tele-header-right {
+		padding-right: 5px;
+	}
+	.detail-tele-header-right .fas {
+		padding-right: 5px;
+	}
+}
+
+.telemedicine-infor-container {
+	padding: 0 70px;
+	height: auto;
+	/* padding-bottom: 10px; */
+	transition: 0.5s;
+	border-bottom: 3px solid #efeef5;
+}
+#telemedicine-infor {
+	height: 200px;
+	overflow: hidden;
+}
+#infor-show-more {
+	padding: 10px 0;
+	color: #45c3d2;
+	cursor: pointer;
+}
+#infor-show-less {
+	padding: 10px 0;
+	display: none;
+	color: #45c3d2;
+	cursor: pointer;
+}
+.telemedicine-infor h1 {
+	font-size: 20px;
+	font-weight: 600;
+	padding: 20px 0 10px 0;
+}
+.telemedicine-infor h2 {
+	font-weight: bold;
+	padding: 10px 0;
+}
+.telemedicine-infor ul {
+	list-style-type: disc;
+}
+.telemedicine-infor li {
+	display: list-item;
+}
+.telemedicine-infor p {
+	padding-top: 15px;
+}
+
+.detail-tele-list-doctors-container {
+	width: 100%;
+	height: auto;
+	padding-top: 5px;
+	background: #efefef;
+}
+.detail-tele-province-filter {
+	width: 1200px;
+	height: auto;
+	margin: 10px auto;
+	margin-bottom: 18px;
+}
+.detail-tele-province {
+	padding: 8px;
+	border: 1px solid #ced4da;
+	border-radius: 3px;
+	display: block;
+	font-size: 17px;
+}
+@media screen and (max-width: 1200px) {
+	.detail-tele-province-filter {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 600px) {
+	.telemedicine-infor-container {
+		padding: 5px 25px;
+	}
+	.detail-tele-province-filter {
+		margin: 5px 0 13px 0;
+	}
+}
+@media screen and (max-width: 425px) {
+	.telemedicine-infor-container {
+		padding: 5px 25px;
+	}
+	.detail-tele-province-filter {
+		margin: 5px 0 13px 0;
+	}
+}
+.detail-tele-list-doctors {
+	width: 1200px;
+	height: auto;
+	margin: 10px auto;
+	display: flex;
+	background-color: #fff;
+	box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+	border-radius: 8px;
+	border-bottom: none;
+}
+.doctor-content {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	border-right: 1px solid #efefef;
+}
+.doctor-content-left {
+	width: 20%;
+	height: 100%;
+}
+.doctor-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 80px;
+	width: 80px;
+	margin: 15px auto;
+	border-radius: 50%;
+}
+.doctor-content-left a {
+	text-decoration: none;
+	padding-left: 20px;
+	color: #45c3d2;
+}
+.doctor-infor-telem {
+	width: 80%;
+	padding: 15px 0;
+}
+.doctor-infor-telem h1 {
+	font-size: 16px;
+	line-height: 1.3;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: #45c3d2;
+	cursor: pointer;
+}
+.doctor-infor-telem p {
+	font-size: 14px;
+	margin: 5px 0;
+	color: #555;
+}
+.doctor-infor-telem p i {
+	margin-top: 10px;
+	margin-right: 5px;
+}
+.doctor-schedule {
+	width: 50%;
+	padding: 15px;
+}
+.date-chooser {
+	outline: none;
+	border: none;
+	color: #337ab7;
+	font-weight: bold;
+	font-size: 15px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #555;
+}
+.doctor-schedule h2 {
+	margin: 10px 0 20px 0;
+	color: #388e3c;
+	font-weight: bold;
+}
+.doctor-schedule i {
+	padding-right: 8px;
+    font-size: 27px;
+}
+.available-schedule {
+	position: relative;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+.available-schedule a {
+	padding: 10px 10px;
+	background: #eee;
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+}
+.available-schedule a i {
+	color: #388e3c;
+}
+.available-schedule a:hover {
+	border: 1px solid #45c3d2;
+}
+.doctor-schedule p {
+	border-bottom: 1px solid #efefef;
+	padding-bottom: 10px;
+	margin-top: 20px;
+	font-size: 12px;
+	color: #333;
+}
+.doctor-schedule p i {
+	color: #555;
+}
+.doctor-schedule h3 {
+	padding-top: 20px;
+	font-size: 15px;
+	color: #666;
+}
+.doctor-schedule h3 strong {
+	font-weight: 600;
+}
+.doctor-schedule h3 a {
+	padding-left: 10px;
+	font-size: 15px;
+	color: #45c3d2;
+	text-decoration: none;
+}
+@media screen and (max-width: 1200px) {
+	.detail-tele-list-doctors {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 600px) {
+	.detail-tele-list-doctors {
+		display: block;
+	}
+	.doctor-content {
+		width: 100%;
+	}
+	.doctor-schedule {
+		width: 100%;
+	}
+	.doctor-img {
+		width: 70px;
+		height: 70px;
+	}
+	.doctor-content-left a {
+		padding-left: 5px;
+		font-size: 13px;
+	}
+	.doctor-infor-telem h1 {
+		font-size: 15px;
+	}
+	.doctor-infor-telem p {
+		font-size: 13px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.detail-tele-list-doctors {
+		display: block;
+	}
+	.doctor-content {
+		width: 100%;
+	}
+	.doctor-schedule {
+		width: 100%;
+	}
+	.doctor-img {
+		width: 70px;
+		height: 70px;
+	}
+	.doctor-content-left a {
+		padding-left: 5px;
+		font-size: 13px;
+	}
+	.doctor-infor-telem h1 {
+		font-size: 15px;
+	}
+	.doctor-infor-telem p {
+		font-size: 13px;
+	}
+}
+.introduction {
+	width: 1200px;
+	height: auto;
+	margin: 30px auto;
+}
+.bookingcare-role-btn {
+	padding: 6px 12px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	width: 100%;
+	height: auto;
+	border: 1px solid #ccc;
+}
+.bookingcare-role-btn p {
+	text-decoration: none;
+	color: #45c3d2;
+	text-align: center;
+}
+.hiden-introduction {
+	display: none;
+}
+.hiden-introduction p {
+	font-weight: 600;
+	padding: 10px 0;
+}
+.hiden-introduction p span {
+	margin: 10px 0;
+}
+.hiden-introduction ul {
+	margin: 0 25px;
+}
+@media screen and (max-width: 1200px) {
+	.introduction {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 600px) {
+	.more-questions p {
+		padding: 13px 30px !important;
+	}
+	.hiden-introduction {
+		padding-left: 10px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.more-questions p {
+		padding: 13px 30px !important;
+	}
+	.hiden-introduction {
+		padding-left: 10px;
+	}
+}
+
+.more-questions {
+	height: 50px;
+	width: 100%;
+	background: #006e6f;
+}
+.more-questions p {
+	padding: 13px 80px;
+	font-size: 14px;
+	color: #fff;
+}
+.more-questions p a {
+	color: #fff04b;
+	font-weight: bold;
+	padding-left: 5px;
+	text-decoration: none;
+}
+
+/* footer */
+.footer1 {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	display: flex;
+	background: #efefef;
+	border-bottom: 3px solid #efeef5;
+}
+.company-infor {
+	width: 50%;
+	height: 350px;
+}
+.company-logo {
+	background: url(https://bookingcare.vn/assets/icon/bookingcare-2020.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	margin: 30px 0 10px 70px;
+	height: 60px;
+	width: 100%;
+}
+.company-address {
+	margin-left: 70px;
+}
+.company-address h2 {
+	padding-bottom: 5px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.company-address p {
+	padding: 3px 0;
+}
+.company-address p i {
+	font-size: 15px;
+	margin-right: 7px;
+}
+.registered {
+	display: flex;
+	margin-left: 70px;
+	margin-top: 10px;
+}
+.registered-1 {
+	background: url(https://bookingcare.vn/assets/icon/bo-cong-thuong.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	margin-right: 20px;
+	height: 40px;
+	width: 90px;
+	cursor: pointer;
+}
+.registered-2 {
+	background: url(https://bookingcare.vn/assets/icon/bo-cong-thuong.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 40px;
+	width: 90px;
+	cursor: pointer;
+}
+.list-features {
+	width: 25%;
+	height: 350px;
+}
+.list-features ul {
+	margin: 20px 20px;
+}
+.list-features ul li {
+	list-style: none;
+	padding: 6px;
+}
+.list-features ul li a {
+	text-decoration: none;
+	color: #1cbfd1;
+}
+.more-infor {
+	width: 25%;
+	height: 350px;
+	padding: 20px 20px;
+}
+.more-infor h2 {
+	font-size: 15px;
+	font-weight: 600;
+}
+.headquarter {
+	margin-bottom: 20px;
+}
+.office {
+	margin-bottom: 20px;
+}
+@media screen and (max-width: 1200px) {
+	.footer1 {
+		width: 100%;
+		height: 590px;
+		display: block;
+	}
+	.company-infor {
+		width: 100%;
+		height: 200px;
+		padding: 10px 10px;
+	}
+	.company-logo {
+		margin: 10px 10px;
+		height: 40px;
+		width: 80%;
+	}
+	.company-address {
+		margin: 10px 10px;
+	}
+	.company-address h2 {
+		font-size: 14px;
+	}
+	.company-address p {
+		font-size: 12px;
+	}
+	.list-features {
+		width: 100%;
+		height: 220px;
+	}
+	.list-features ul {
+		margin: 7px 10px;
+	}
+	.more-infor {
+		width: 100%;
+		height: 170px;
+		padding: 10px 10px;
+	}
+	.more-infor h2 {
+		font-size: 13px;
+	}
+	.more-infor p {
+		font-size: 12px;
+	}
+	.headquarter {
+		margin-bottom: 10px;
+	}
+	.office {
+		margin-bottom: 10px;
+	}
+}
+@media screen and (max-width: 600px) {
+	.footer1 {
+		width: 100%;
+		height: 590px;
+		display: block;
+	}
+	.company-infor {
+		width: 100%;
+		height: 200px;
+		padding: 10px 10px;
+	}
+	.company-logo {
+		margin: 10px 10px;
+		height: 40px;
+		width: 80%;
+	}
+	.company-address {
+		margin: 10px 10px;
+	}
+	.company-address h2 {
+		font-size: 14px;
+	}
+	.company-address p {
+		font-size: 12px;
+	}
+	.list-features {
+		width: 100%;
+		height: 220px;
+	}
+	.list-features ul {
+		margin: 7px 10px;
+	}
+	.more-infor {
+		width: 100%;
+		height: 170px;
+		padding: 10px 10px;
+	}
+	.more-infor h2 {
+		font-size: 13px;
+	}
+	.more-infor p {
+		font-size: 12px;
+	}
+	.headquarter {
+		margin-bottom: 10px;
+	}
+	.office {
+		margin-bottom: 10px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.footer1 {
+		width: 100%;
+		height: 590px;
+		display: block;
+	}
+	.company-infor {
+		width: 100%;
+		height: 200px;
+		padding: 10px 10px;
+	}
+	.company-logo {
+		margin: 10px 10px;
+		height: 40px;
+		width: 80%;
+	}
+	.company-address {
+		margin: 10px 10px;
+	}
+	.company-address h2 {
+		font-size: 14px;
+	}
+	.company-address p {
+		font-size: 12px;
+	}
+	.list-features {
+		width: 100%;
+		height: 220px;
+	}
+	.list-features ul {
+		margin: 7px 10px;
+	}
+	.more-infor {
+		width: 100%;
+		height: 170px;
+		padding: 10px 10px;
+	}
+	.more-infor h2 {
+		font-size: 13px;
+	}
+	.more-infor p {
+		font-size: 12px;
+	}
+	.headquarter {
+		margin-bottom: 10px;
+	}
+	.office {
+		margin-bottom: 10px;
+	}
+}
+
+.footer2 {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	background: #1cbfd1;
+}
+.footer-left {
+	text-align: center;
+	width: 50%;
+}
+.footer-left p {
+	padding: 19px;
+}
+.footer-right {
+	width: 50%;
+	text-align: center;
+}
+.footer-right i {
+	font-size: 20px;
+	padding: 20px;
+	cursor: pointer;
+}
+@media screen and (max-width: 1200px) {
+	.footer2 {
+		display: block;
+		height: 80px;
+	}
+	.footer-left {
+		width: 100%;
+	}
+	.footer-left p {
+		padding: 5px 0;
+	}
+	.footer-right {
+		width: 100%;
+	}
+	.footer-right i {
+		padding: 6px 20px;
+	}
+}
+@media screen and (max-width: 600px) {
+	.footer2 {
+		display: block;
+		height: 80px;
+	}
+	.footer-left {
+		width: 100%;
+	}
+	.footer-left p {
+		padding: 5px 0;
+	}
+	.footer-right {
+		width: 100%;
+	}
+	.footer-right i {
+		padding: 6px 20px;
+	}
+}
+@media screen and (max-width: 425px) {
+	.footer2 {
+		display: block;
+		height: 80px;
+	}
+	.footer-left {
+		width: 100%;
+	}
+	.footer-left p {
+		padding: 5px 0;
+	}
+	.footer-right {
+		width: 100%;
+	}
+	.footer-right i {
+		padding: 8px 20px;
+	}
+}

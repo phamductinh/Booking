@@ -10,6 +10,7 @@ import "./HomePage.css";
 import { Link } from "react-router-dom";
 import Fuse from "fuse.js";
 import { withRouter } from "react-router";
+import Specialty from "./Specialty";
 
 class HomePage extends Component {
 	constructor(props) {
@@ -48,8 +49,8 @@ class HomePage extends Component {
 		}
 	};
 
-	handleOpenMenu() {
-		this.setState((prevState) => ({
+	async handleOpenMenu() {
+		await this.setState((prevState) => ({
 			isOpenMenu: !prevState.isOpenMenu,
 		}));
 	}
@@ -96,14 +97,20 @@ class HomePage extends Component {
 		}
 	}
 
+	handleShowLogin = () => {
+		this.props.history.push(`/login`);
+	};
+
 	handleViewDetail = (doctor) => {
 		this.props.history.push(`/detail-doctor/${doctor.id}`);
 	};
+
 	handleViewUpdateInfor = () => {
 		if (this.props.userInfor) {
 			this.props.history.push(`/update-infor/${this.props.userInfor.id}`);
 		}
 	};
+
 	handleViewBookingHistory = () => {
 		if (this.props.userInfor) {
 			this.props.history.push(
@@ -157,7 +164,10 @@ class HomePage extends Component {
 								<div className="flag-en"></div>
 							</div>
 							{!isLoggedIn ? (
-								<button className="btn-login-header">
+								<button
+									className="btn-login-header"
+									onClick={() => this.handleShowLogin()}
+								>
 									<Link to="/login">Login</Link>
 									<div className="arrow-wrapper">
 										<div className="arrow"></div>
@@ -435,6 +445,8 @@ class HomePage extends Component {
 						</button>
 					</div>
 				</div>
+
+				<Specialty />
 
 				<div className="footer1">
 					<div className="company-infor">

@@ -24,10 +24,9 @@ let bookingAnAppointment = (req, res) => {
 	let data = req.body;
 	bookingModel.bookingAnAppointmentModel(data, (err, results) => {
 		if (err) {
-			console.log(err);
 			return res.status(500).send({
 				code: 500,
-				msg: "Có gì đó sai sai!",
+				msg: "Bác sĩ không rảnh vào thời gian này. Vui lòng chọn khoảng thời gian khác!",
 			});
 		}
 		return res.status(200).send({

@@ -228,7 +228,7 @@ class BookingHistory extends Component {
 							{arrBookings &&
 								arrBookings.map((item, index) => {
 									const date = moment(
-										item.booking_date / 1000
+										item.booking_date / 1
 									).format("YYYY-MM-DD");
 									return (
 										<tr key={index}>

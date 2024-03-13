@@ -81,12 +81,19 @@ class Login extends Component {
 		return isValid;
 	};
 
+	handleShowHome = () => {
+		this.props.history.push(`/`);
+	};
+
 	render() {
 		return (
 			<>
 				<div className="login-container">
 					<div className="login-box">
-						<h2>Đăng nhập</h2>
+						<div
+							className="login-logo"
+							onClick={() => this.handleShowHome()}
+						></div>
 						<form className="login-form">
 							<div className="user-box">
 								<input

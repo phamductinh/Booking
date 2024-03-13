@@ -75,6 +75,7 @@ class Booking extends Component {
 			date: date,
 		});
 		let res = await getBookingByDate(formatDate);
+        console.log(res)
 		if (res && res.code === 200) {
 			const bookingTimes = res.data.map((item) => item.booking_time);
 			if (currentDate.getTime() === dateChoosed.getTime()) {
@@ -118,7 +119,7 @@ class Booking extends Component {
 				birthday: this.state.birthday,
 				address: this.state.address,
 				reason: this.state.reason,
-				status: "Pending",
+				status: "Đang chờ",
 				receiverEmail: this.props.userInfor.email,
 				doctorName: this.state.detailDoctor.fullName,
 				booking_date_formated: formattedDateString,
@@ -141,6 +142,7 @@ class Booking extends Component {
 						isLoading: false,
 					});
 				} catch (error) {
+					console.log(error);
 					if (error.response) {
 						if (error.response.data) {
 							this.setState({
@@ -163,8 +165,8 @@ class Booking extends Component {
 	render() {
 		let { detailDoctor, bookedTimes, hours, selectedButton, isLoading } =
 			this.state;
-
 		let currentDate = moment().format("YYYY-MM-DD");
+        console.log(bookedTimes)
 		return (
 			<>
 				<div className="booking-detail-doctor-container">

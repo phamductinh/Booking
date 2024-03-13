@@ -6,6 +6,7 @@ import {
 	createAFeedbackQuery,
 	getFeedbackByDoctorIdQuery,
 	updateFeedbackQuery,
+	findDoctorBySpecialty,
 } from "../database/queries";
 
 let getAllDoctorModel = (callback) => {
@@ -24,6 +25,15 @@ let getDoctorByIdModel = (id, callback) => {
 			return callback(error);
 		}
 		return callback(null, results[0]);
+	});
+};
+
+let getDoctorBySpecialtyIdModel = (id, callback) => {
+	db.query(findDoctorBySpecialty, id, (error, results) => {
+		if (error) {
+			return callback(error);
+		}
+		return callback(null, results);
 	});
 };
 
@@ -100,4 +110,5 @@ module.exports = {
 	createAFeedbackModel,
 	getFeedbackByDoctorIdModel,
 	updateFeedbackModel,
+	getDoctorBySpecialtyIdModel,
 };

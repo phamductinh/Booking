@@ -58,6 +58,22 @@ let getDoctorById = (req, res) => {
 	});
 };
 
+let getDoctorBySpecialtyId = (req, res) => {
+	let id = req.query.id;
+	if (!id) {
+		return res.status(400).send({ code: 400, msg: errMsg.missing_input });
+	}
+	doctorModel.getDoctorBySpecialtyIdModel(id, (error, doctor) => {
+		if (error) {
+			throw error;
+		}
+		return res.send({
+			code: 200,
+			data: doctor,
+		});
+	});
+};
+
 let createADoctor = (req, res) => {
 	let doctorData = req.body;
 	doctorModel.createDoctorModel(doctorData, (err, results) => {
@@ -129,4 +145,5 @@ module.exports = {
 	createAFeedback,
 	getFeedbackByDoctorId,
 	updateFeedback,
+	getDoctorBySpecialtyId,
 };

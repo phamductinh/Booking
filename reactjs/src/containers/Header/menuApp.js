@@ -23,6 +23,16 @@ export const adminMenu = [
 			},
 		],
 	},
+	{
+		//quản lý specalty
+		name: "menu.admin.manage-specialty",
+		menus: [
+			{
+				name: "menu.admin.manage-specialty",
+				link: "/system/manage-specialty",
+			},
+		],
+	},
 ];
 export const doctorMenu = [
 	{

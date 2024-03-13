@@ -26,6 +26,7 @@ import Booking from "./System/Doctor/Booking";
 import confirmEmail from "./Auth/confirmEmail";
 import BookingHistory from "./System/BookingHistory";
 import UpdateInfor from "./System/UpdateInfor";
+import DetailSpecialty from "./System/DetailSpecialty";
 
 class App extends Component {
 	handlePersistorState = () => {
@@ -74,7 +75,7 @@ class App extends Component {
 										path={path.SIGNUP}
 										component={SignUp}
 									/>
-									<Route
+									{/* <Route
 										path={path.SYSTEM}
 										render={(props) => (
 											<PrivateRoute
@@ -89,6 +90,10 @@ class App extends Component {
 												)}
 											/>
 										)}
+									/> */}
+									<Route
+										path={path.SYSTEM}
+										component={userIsAuthenticated(System)}
 									/>
 									<Route
 										path={path.DOCTOR}
@@ -130,6 +135,11 @@ class App extends Component {
 									<Route
 										path={"/update-infor/:id"}
 										component={UpdateInfor}
+									/>
+									<Route
+										exact
+										path={"/specialty/:id"}
+										component={DetailSpecialty}
 									/>
 								</Switch>
 							</CustomScrollbars>

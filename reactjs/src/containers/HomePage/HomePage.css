@@ -43,6 +43,7 @@
 	flex-direction: column;
 	flex-wrap: wrap;
 	gap: 20px;
+	z-index: 1000;
 }
 
 .user-infor {
@@ -62,7 +63,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	cursor: pointer;
-	z-index: 5;
 }
 
 .user-avatar {
@@ -381,6 +381,7 @@
 .download {
 	display: flex;
 	justify-content: center;
+	z-index: 1;
 }
 .android {
 	background-image: url("./image/download/android.svg");
@@ -584,6 +585,8 @@
 	background-size: cover;
 	transition: all 0.3s linear;
 	cursor: pointer;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+		rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 	z-index: 1;
 }
 .doctor-img:hover {
@@ -603,6 +606,7 @@
 	transition: 1s;
 	cursor: pointer;
 	z-index: 1;
+	padding-top: 40px;
 }
 .doctor-infor {
 	text-align: center;
